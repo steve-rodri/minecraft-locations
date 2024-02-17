@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react"
-import { Button, Container, Text } from "@mantine/core"
+import { useEffect, useState } from "react"
+import { Container, Text } from "@mantine/core"
+import { Map } from "./components/Map"
 
-const App: React.FC = () => {
+const App = () => {
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -23,24 +24,24 @@ const App: React.FC = () => {
   }, [])
 
   return (
-    <Container
-      size="xl"
-      style={{
-        width: windowSize.width,
-        height: windowSize.height,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text align="center" size="xl">
-        Welcome to My Mantine App!
+    <>
+      <Text ta="center" size="xl">
+        Minecraft Locations
       </Text>
-      <Button size="lg" variant="filled">
-        Hello Mantine!
-      </Button>
-    </Container>
+      <Container
+        size="xl"
+        style={{
+          width: windowSize.width,
+          height: windowSize.height,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Map />
+      </Container>
+    </>
   )
 }
 
