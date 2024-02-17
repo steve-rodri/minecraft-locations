@@ -20,24 +20,23 @@ export const ScaledPoint = ({
   popoverPlacement: FloatingPosition
 }) => {
   const [opened, setOpened] = useState(false)
+  const red = point.y >= 0 ? 255 : 255 - Math.abs(point.y)
+  const blue = point.y <= 0 ? 255 : 255 - point.y
+  if (point.label === "Spawn") console.log({ red, blue })
   return (
-    <Popover
-      withArrow
-      opened={opened}
-      onChange={setOpened}
-      position={popoverPlacement}
-    >
+    <Popover withArrow opened={opened} position={popoverPlacement}>
       <PopoverTarget>
         <div
           onMouseEnter={() => setOpened(true)}
           onMouseLeave={() => setOpened(false)}
           style={{
+            margin: "30px",
             position: "absolute",
             left: `${point.scaledX}px`,
             top: `${point.scaledZ}px`, // Using Z coordinate for top position
             width: "12px",
             height: "12px",
-            backgroundColor: "red", // Customize color as needed
+            backgroundColor: `rgb(${red}, 0, ${blue})`, // Customize color as needed
             borderRadius: "50%",
             transform: "translate(-50%, -50%)", // Center the circle on its position
           }}

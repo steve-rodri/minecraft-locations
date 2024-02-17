@@ -12,13 +12,13 @@ export const Map = () => {
   const screenHeight = window.innerHeight
   const buffer = 50 // Size of the buffer in pixels
 
-  // Find the maximum and minimum values of x, z, and Z
+  // Find the maximum and minimum values of x and z
   const maxX = Math.max(...points.map((point) => point.x))
   const minX = Math.min(...points.map((point) => point.x))
   const maxZ = Math.max(...points.map((point) => point.z))
   const minZ = Math.min(...points.map((point) => point.z))
 
-  // Add buffer to the range of x, z, and Z
+  // Add buffer to the range of x and z
   const rangeX = maxX - minX + 2 * buffer
   const rangeZ = maxZ - minZ + 2 * buffer
 
@@ -30,9 +30,13 @@ export const Map = () => {
   const scaledPoints = points.map((point) => ({
     ...point,
     scaledX: (point.x - minX + buffer) * scaleX,
-    scaledY: (point.x - minX + buffer) * scaleX,
     scaledZ: (point.z - minZ + buffer) * scaleZ, // Using Z instead of Y
   }))
+
+  const maxScaledX = Math.max(...scaledPoints.map((point) => point.scaledX))
+  const minScaledX = Math.min(...scaledPoints.map((point) => point.scaledX))
+  const maxScaledZ = Math.max(...scaledPoints.map((point) => point.scaledZ))
+  const minScaledZ = Math.min(...scaledPoints.map((point) => point.scaledZ))
 
   return (
     <div
@@ -47,14 +51,13 @@ export const Map = () => {
       {scaledPoints.map((point, index) => {
         const edgeBuffer = 50
         const [onLeftEdge, onRightEdge] = [
-          point.scaledX - minX < edgeBuffer,
-          maxX - point.scaledX < edgeBuffer,
+          point.scaledX - minScaledX < edgeBuffer,
+          maxScaledX - point.scaledX < edgeBuffer,
         ]
         const [onTopEdge, onBottomEdge] = [
-          point.scaledZ - minZ < edgeBuffer,
-          maxZ - point.scaledZ < edgeBuffer,
+          point.scaledZ - minScaledZ < edgeBuffer,
+          maxScaledZ - point.scaledZ < edgeBuffer,
         ]
-
         const popoverPlacement: FloatingPosition = (() => {
           let side: FloatingSide = "bottom"
           let placement: FloatingPlacement | undefined
@@ -63,19 +66,19 @@ export const Map = () => {
           if (onTopEdge) side = "bottom"
           if (onBottomEdge) side = "top"
           if (onLeftEdge && onTopEdge) {
-            side = "bottom"
-            placement = "end"
+            side = "right"
+            placement = "start"
           }
           if (onTopEdge && onRightEdge) {
-            side = "bottom"
+            side = "left"
             placement = "start"
           }
           if (onRightEdge && onBottomEdge) {
-            side = "top"
-            placement = "start"
+            side = "left"
+            placement = "end"
           }
           if (onBottomEdge && onLeftEdge) {
-            side = "top"
+            side = "right"
             placement = "end"
           }
           if (!placement) return side
