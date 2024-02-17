@@ -1,5 +1,10 @@
-import { Group, Box, Text } from "@mantine/core"
+import {
+  FloatingPlacement,
+  FloatingPosition,
+  FloatingSide,
+} from "@mantine/core"
 import { points } from "./points"
+import { ScaledPoint } from "./ScaledPoint"
 
 export const Map = () => {
   // Assuming your map dimensions are known
@@ -39,31 +44,52 @@ export const Map = () => {
         marginTop: "20px",
       }}
     >
-      {scaledPoints.map((point, index) => (
-        <div
-          key={index}
-          style={{
-            position: "absolute",
-            left: `${point.scaledX}px`,
-            top: `${point.scaledZ}px`, // Using Z coordinate for top position
-            width: "10px",
-            height: "10px",
-            backgroundColor: "red", // Customize color as needed
-            borderRadius: "50%",
-            transform: "translate(-50%, -50%)", // Center the circle on its position
-          }}
-        >
-          <Box w="200px">
-            {/* Optionally, you can display labels or additional information */}
-            <Text mt="md">{point.label}</Text>
-            <Group gap="xs">
-              <Text>X: {point.x}</Text>
-              <Text>Y: {point.y}</Text>
-              <Text>Z: {point.z}</Text>
-            </Group>
-          </Box>
-        </div>
-      ))}
+      {scaledPoints.map((point, index) => {
+        const edgeBuffer = 50
+        const [onLeftEdge, onRightEdge] = [
+          point.scaledX - minX < edgeBuffer,
+          maxX - point.scaledX < edgeBuffer,
+        ]
+        const [onTopEdge, onBottomEdge] = [
+          point.scaledZ - minZ < edgeBuffer,
+          maxZ - point.scaledZ < edgeBuffer,
+        ]
+
+        const popoverPlacement: FloatingPosition = (() => {
+          let side: FloatingSide = "bottom"
+          let placement: FloatingPlacement | undefined
+          if (onLeftEdge) side = "right"
+          if (onRightEdge) side = "left"
+          if (onTopEdge) side = "bottom"
+          if (onBottomEdge) side = "top"
+          if (onLeftEdge && onTopEdge) {
+            side = "bottom"
+            placement = "end"
+          }
+          if (onTopEdge && onRightEdge) {
+            side = "bottom"
+            placement = "start"
+          }
+          if (onRightEdge && onBottomEdge) {
+            side = "top"
+            placement = "start"
+          }
+          if (onBottomEdge && onLeftEdge) {
+            side = "top"
+            placement = "end"
+          }
+          if (!placement) return side
+          return `${side}-${placement}`
+        })()
+
+        return (
+          <ScaledPoint
+            point={point}
+            key={index}
+            popoverPlacement={popoverPlacement}
+          />
+        )
+      })}
     </div>
   )
 }
