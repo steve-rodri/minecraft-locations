@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import { Container, Text } from "@mantine/core"
+import { Box, Container, Group, Text, Title } from "@mantine/core"
 import { Map } from "./components/Map"
+import { points } from "./components/points"
 
 const App = () => {
   const [windowSize, setWindowSize] = useState({
@@ -24,7 +25,7 @@ const App = () => {
   }, [])
 
   return (
-    <>
+    <Box>
       <Text ta="center" size="xl">
         Minecraft Locations
       </Text>
@@ -41,7 +42,25 @@ const App = () => {
       >
         <Map />
       </Container>
-    </>
+      <Container
+        size="xl"
+        style={{
+          width: windowSize.width,
+          marginTop: 200,
+        }}
+      >
+        {points.map((point) => {
+          return (
+            <Group mt="lg">
+              <Title style={{ color: "white" }}>{point.label}</Title>
+              <Title style={{ color: "white" }}>X: {point.x}</Title>
+              <Title style={{ color: "white" }}>Y: {point.y}</Title>
+              <Title style={{ color: "white" }}>Z: {point.z}</Title>
+            </Group>
+          )
+        })}
+      </Container>
+    </Box>
   )
 }
 

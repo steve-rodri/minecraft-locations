@@ -19,7 +19,7 @@ export const ScaledPoint = ({
   point: ScaledPoint
   popoverPlacement: FloatingPosition
 }) => {
-  const [opened, setOpened] = useState(false)
+  const [opened, setOpened] = useState(true)
   const red = point.y >= 0 ? 255 : 255 - Math.abs(point.y)
   const blue = point.y <= 0 ? 255 : 255 - point.y
   if (point.label === "Spawn") console.log({ red, blue })

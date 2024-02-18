@@ -44,7 +44,6 @@ export const Map = () => {
         position: "relative",
         width: "100%",
         height: "800px",
-        backgroundColor: "#606060",
         marginTop: "20px",
       }}
     >

@@ -20,4 +20,10 @@ export const points: Point[] = [
   { x: -826, y: 63, z: 711, label: "Book Village" },
   { x: -325, y: 83, z: -65, label: "Blue Yellow Hut" },
   { x: -357, y: 62, z: 1356, label: "Steven's Village" },
+  { x: 26, y: 72, z: 875, label: "Mineshaft" },
+  { x: -286, y: 111, z: -735, label: "Mountain Ship Wreck" },
+  { x: -244, y: 24, z: -811, label: "Glowberry Cavern" },
+  { x: -1223, y: 64, z: 89, label: "West Village" },
+  { x: -1178, y: 71, z: -539, label: "NCR-5" },
+  { x: -987, y: 71, z: -1322, label: "Jungle Biome" },
 ]
