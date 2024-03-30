@@ -42,4 +42,13 @@ export const points: Point[] = [
   { x: -523, y: 63, z: -1134, label: "Seaside Nether Core" },
   { x: 42, y: 64, z: -513, label: "Sea Cobble Hut" },
   { x: 491, y: 66, z: -356, label: "Sand Acacia Village" },
+  { x: 327, y: 65, z: -197, label: "Sand Temple" },
+  { x: 2163, y: 35, z: 1714, label: "Igloo w/ Bunker" },
+  { x: 1216, y: 64, z: 1582, label: "Acacia Treehouse" },
+  { x: 635, y: 57, z: 1609, label: "Cave/Mineshaft to Explore" },
+  { x: 1737, y: 81, z: 1875, label: "Bamboo" },
+  { x: 3600, y: 50, z: 1400, label: "Underwater chest" },
+  { x: 3900, y: 50, z: 1310, label: "Village" },
+  { x: 814, y: 50, z: 1240, label: "Two Islands" },
+  { x: 1653, y: -28, z: -10000, label: "Subspace" },
 ]
