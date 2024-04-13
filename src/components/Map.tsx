@@ -3,10 +3,10 @@ import {
   FloatingPosition,
   FloatingSide,
 } from "@mantine/core"
-import { points } from "./points"
 import { ScaledPoint } from "./ScaledPoint"
+import { Point } from "../data/getPoints"
 
-export const Map = () => {
+export const Map = ({ points }: { points: Point[] }) => {
   // Assuming your map dimensions are known
   const screenWidth = window.innerWidth
   const screenHeight = window.innerHeight

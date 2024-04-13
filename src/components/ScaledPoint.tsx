@@ -7,7 +7,7 @@ import {
   Group,
   FloatingPosition,
 } from "@mantine/core"
-import { Point } from "./points"
+import { Point } from "../data/getPoints"
 import { useState } from "react"
 
 type ScaledPoint = Point & { scaledX: number; scaledZ: number }
@@ -22,7 +22,7 @@ export const ScaledPoint = ({
   const [opened, setOpened] = useState(false)
   const red = point.y >= 0 ? 255 : 255 - Math.abs(point.y)
   const blue = point.y <= 0 ? 255 : 255 - point.y
-  if (point.label === "Spawn") console.log({ red, blue })
+  // if (point.label === "Spawn") console.log({ red, blue })
   return (
     <Popover withArrow opened={opened} position={popoverPlacement}>
       <PopoverTarget>

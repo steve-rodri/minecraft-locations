@@ -51,4 +51,5 @@ export const points: Point[] = [
   { x: 3900, y: 50, z: 1310, label: "Village" },
   { x: 814, y: 50, z: 1240, label: "Two Islands" },
   { x: 1653, y: -28, z: -10000, label: "Subspace" },
+  { x: 1130, y: 13, z: 1734, label: "Acacia Cave" },
 ]
