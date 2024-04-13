@@ -43,6 +43,7 @@
     "gen:types": "npx supabase gen types typescript --project-id=jaryyzzrttbzozbwhqck >> ./src/utils/database.types.ts"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@mantine/core": "^7.5.3",
     "@mantine/hooks": "^7.5.3",
     "@supabase/auth-ui-react": "^0.4.7",
@@ -51,7 +52,8 @@
     "papaparse": "^5.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.51.3"
+    "react-hook-form": "^7.51.3",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/papaparse": "^5.3.14",
