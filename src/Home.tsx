@@ -47,7 +47,7 @@ const Home = () => {
   }, [selectedServer])
 
   return (
-    <Stack gap="xl">
+    <Stack gap="xl" my="xl">
       <Title ta="center">Minecraft Locations</Title>
       <Container
         size="xl"
@@ -63,9 +63,8 @@ const Home = () => {
         <Map points={points} />
       </Container>
 
-      <Group mx="xl">
+      <Flex mx="xl">
         <Select
-          w="20vw"
           size="md"
           label="Server"
           placeholder="Select Server"
@@ -77,22 +76,32 @@ const Home = () => {
           data={servers.map((s) => s.name)}
           nothingFoundMessage="Nothing found..."
         />
-      </Group>
+      </Flex>
       <Flex mx="xl">
         <AddPointForm server={selectedServer} />
       </Flex>
-      <Container mx="xl" size="xl">
+      <Stack mx="xl" gap="xl">
         {points.map((point, i) => {
           return (
-            <Group mt="lg" key={i}>
-              <Title style={{ color: "white" }}>{point.label}</Title>
-              <Title style={{ color: "white" }}>X: {point.x}</Title>
-              <Title style={{ color: "white" }}>Y: {point.y}</Title>
-              <Title style={{ color: "white" }}>Z: {point.z}</Title>
-            </Group>
+            <Stack gap="xs">
+              <Title order={5} style={{ color: "white" }}>
+                {point.label}
+              </Title>
+              <Group key={i} gap="sm">
+                <Title order={5} style={{ color: "white" }}>
+                  X: {point.x}
+                </Title>
+                <Title order={5} style={{ color: "white" }}>
+                  Y: {point.y}
+                </Title>
+                <Title order={5} style={{ color: "white" }}>
+                  Z: {point.z}
+                </Title>
+              </Group>
+            </Stack>
           )
         })}
-      </Container>
+      </Stack>
     </Stack>
   )
 }
