@@ -9,7 +9,7 @@ import { Point } from "../data/getPoints"
 export const Map = ({ points }: { points: Point[] }) => {
   // Assuming your map dimensions are known
   const screenWidth = window.innerWidth
-  const screenHeight = window.innerHeight
+  const screenHeight = window.innerHeight * 0.7
   const buffer = 50 // Size of the buffer in pixels
 
   // Find the maximum and minimum values of x and z
@@ -43,7 +43,7 @@ export const Map = ({ points }: { points: Point[] }) => {
       style={{
         position: "relative",
         width: "100%",
-        height: "800px",
+        height: "70vh",
         marginTop: "20px",
       }}
     >
