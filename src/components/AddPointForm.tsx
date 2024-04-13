@@ -45,7 +45,7 @@ export const AddPointForm = ({ server }: { server?: Server }) => {
           control={control}
           render={({ field }) => <NumberInput {...field} label="z" />}
         />
-        <Button fullWidth type="submit">
+        <Button fullWidth type="submit" mt="lg">
           Add Point
         </Button>
       </Stack>
