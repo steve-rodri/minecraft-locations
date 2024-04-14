@@ -87,7 +87,7 @@ export const AddPointForm = () => {
                 <Input
                   {...field}
                   value={field.value.toString()}
-                  maxWidth="$10"
+                  maxWidth="$8"
                   selectTextOnFocus
                   keyboardType="numeric"
                 />
@@ -103,7 +103,7 @@ export const AddPointForm = () => {
                 <Input
                   {...field}
                   value={field.value.toString()}
-                  maxWidth="$10"
+                  maxWidth="$8"
                   selectTextOnFocus
                   keyboardType="numeric"
                 />
@@ -119,7 +119,7 @@ export const AddPointForm = () => {
                 <Input
                   {...field}
                   value={field.value.toString()}
-                  maxWidth="$10"
+                  maxWidth="$8"
                   selectTextOnFocus
                   keyboardType="numeric"
                 />

@@ -48,7 +48,7 @@ export const BottomSheet = ({
             onPress={() => setOpen(false)}
           />
         </XStack>
-        <View mx="$8">{children}</View>
+        {children}
       </Sheet.Frame>
     </Sheet>
   );
