@@ -1,7 +1,7 @@
 import { ChevronDown } from "@tamagui/lucide-icons";
 import { Sheet } from "@tamagui/sheet";
 import { ReactNode } from "react";
-import { Button, H2, XGroup, XStack } from "tamagui";
+import { Button, H2, View, XGroup, XStack } from "tamagui";
 
 export const BottomSheet = ({
   open,
@@ -38,7 +38,6 @@ export const BottomSheet = ({
         // justifyContent="center"
         alignItems="center"
         space="$5"
-        position="relative"
       >
         <XStack alignItems="flex-start" justifyContent="space-between" w="100%">
           <H2>{title}</H2>
@@ -49,7 +48,7 @@ export const BottomSheet = ({
             onPress={() => setOpen(false)}
           />
         </XStack>
-        {children}
+        <View mx="$8">{children}</View>
       </Sheet.Frame>
     </Sheet>
   );

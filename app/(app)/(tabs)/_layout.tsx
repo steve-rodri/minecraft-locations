@@ -50,7 +50,7 @@ export default function TabLayout() {
       </Tabs>
       <FAB onPress={() => setOpen(true)} />
       <BottomSheet open={open} setOpen={setOpen} title="Add Location">
-        <AddPointForm closeSheet={() => setOpen(false)} />
+        <AddPointForm />
       </BottomSheet>
     </ServerContextProvider>
   );

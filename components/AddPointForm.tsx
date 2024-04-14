@@ -26,7 +26,7 @@ const schema = z.object({
   z: z.number(),
 });
 
-export const AddPointForm = ({ closeSheet }: { closeSheet: () => void }) => {
+export const AddPointForm = () => {
   const { selected: server } = useServerContext();
   const { mutateAsync: createPoint } = useCreatePoint();
   const [success, setSuccess] = useState(false);
