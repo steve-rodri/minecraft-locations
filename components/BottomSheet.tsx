@@ -20,8 +20,7 @@ export const BottomSheet = ({
       modal
       open={open}
       onOpenChange={setOpen}
-      snapPoints={["50%"]}
-      snapPointsMode="fit"
+      snapPoints={[65, 45]}
       dismissOnSnapToBottom
       zIndex={100_000}
       animation="quick"
