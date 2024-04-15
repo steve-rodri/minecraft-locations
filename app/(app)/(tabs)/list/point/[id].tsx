@@ -1,25 +1,19 @@
-import { ScrollText } from "@tamagui/lucide-icons";
-import { Stack, useLocalSearchParams } from "expo-router";
-import {
-  H2,
-  H3,
-  View,
-  Text,
-  YStack,
-  XStack,
-  H4,
-  Button,
-  ScrollView,
-} from "tamagui";
+import { useGlobalSearchParams, useLocalSearchParams } from "expo-router";
+import { H2, H3, View, Text, YStack, XStack, H4, ScrollView } from "tamagui";
 import { DeletePointModal } from "~/components/DeletePointModal";
 import { EditPointModal } from "~/components/EditPointModal";
+import { useServerContext } from "~/components/ServerContext";
 import { useGetPoint } from "~/data/points";
 
 export default function PointDetail() {
   const { id } = useLocalSearchParams();
+  const serverCtx = useServerContext();
   const { data: point, isLoading } = useGetPoint(
-    Number(Array.isArray(id) ? id[0] : id)
+    Number(Array.isArray(id) ? id[0] : id),
+    serverCtx.selected
   );
+
+  console.log(point);
 
   if (isLoading) {
     return (
@@ -47,32 +41,47 @@ export default function PointDetail() {
     );
 
   return (
-    <YStack flex={1} bg="$background" px="$4" gap="$6">
-      <ScrollView>
-        <YStack my="$3" gap="$1">
+    <YStack
+      flex={1}
+      bg="$background"
+      mx="$4"
+      mb="$4"
+      justifyContent="space-between"
+    >
+      <YStack gap="$6">
+        <YStack mb="$3" gap="$3">
           <H2>{point.label}</H2>
-          {point.server ? <Text>Server: {point.server.name}</Text> : null}
-        </YStack>
-        <YStack gap="$9">
-          <XStack alignItems="center" gap="$3">
-            <H4 fontSize="$11">X:</H4>
-            <H3 fontSize="$12">{point.x}</H3>
-          </XStack>
-          <XStack alignItems="center" gap="$3">
-            <H4 fontSize="$11">Y:</H4>
-            <H3 fontSize="$12">{point.y}</H3>
-          </XStack>
-          <XStack alignItems="center" gap="$3">
-            <H4 fontSize="$11">Z:</H4>
-            <H3 fontSize="$12">{point.z}</H3>
-          </XStack>
+          {point.server ? (
+            <Text color="gray">Server: {point.server.name}</Text>
+          ) : null}
         </YStack>
 
-        <XStack gap="$4" mt="$4">
-          <EditPointModal point={point} />
-          <DeletePointModal point={point} />
+        <XStack gap="$4" alignItems="center">
+          <XStack alignItems="center" gap="$2">
+            <H4 fontSize="$5" color="gray">
+              X:
+            </H4>
+            <H3 fontSize="$9">{point.x}</H3>
+          </XStack>
+          <XStack alignItems="center" gap="$2">
+            <H4 fontSize="$5" color="gray">
+              Y:
+            </H4>
+            <H3 fontSize="$9">{point.y}</H3>
+          </XStack>
+          <XStack alignItems="center" gap="$2">
+            <H4 fontSize="$5" color="gray">
+              Z:
+            </H4>
+            <H3 fontSize="$9">{point.z}</H3>
+          </XStack>
         </XStack>
-      </ScrollView>
+      </YStack>
+
+      <XStack gap="$4" mt="$4">
+        <EditPointModal point={point} />
+        <DeletePointModal point={point} />
+      </XStack>
     </YStack>
   );
 }

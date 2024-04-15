@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "~/lib/supabase";
+import { Server } from "./servers";
 
 export const getPoints = async (serverId = 1) => {
   const { data: points } = await supabase
@@ -24,7 +25,10 @@ export const useGetPoints = (serverId = 1) => {
   });
 };
 
-export const useGetPoint = (id: number) => {
+export type Point = Awaited<ReturnType<typeof getPoints>>[0];
+
+export const useGetPoint = (id: number, server: Server | null) => {
+  const queryClient = useQueryClient();
   return useQuery({
     queryKey: ["points", id],
     queryFn: async () => {
@@ -35,10 +39,19 @@ export const useGetPoint = (id: number) => {
         .maybeSingle();
       return point;
     },
+    initialData: () => {
+      const points = queryClient.getQueryData<Point[]>(["points", server?.id]);
+      const point = points?.find((p) => p.id === id) ?? {
+        id: 0,
+        x: 0,
+        y: 0,
+        z: 0,
+        label: "",
+      };
+      return { ...point, server };
+    },
   });
 };
-
-export type Point = Awaited<ReturnType<typeof getPoints>>[0];
 
 export const useCreatePoint = () => {
   const queryClient = useQueryClient();
@@ -65,6 +78,7 @@ export const useEditPoint = () => {
       const { data } = await supabase
         .from("points")
         .update(point)
+        .eq("id", point.id)
         .select("id, x, y, z, label")
         .maybeSingle();
       return data;
@@ -81,6 +95,7 @@ export const useDeletePoint = () => {
     mutationKey: ["delete-point"],
     mutationFn: async (id: number) => {
       await supabase.from("points").delete().eq("id", id);
+      return { success: true };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["points"] });

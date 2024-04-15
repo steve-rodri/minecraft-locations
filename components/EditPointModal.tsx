@@ -1,31 +1,31 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { X } from "@tamagui/lucide-icons";
+import { Pencil, X } from "@tamagui/lucide-icons";
 import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
-  Adapt,
   Button,
   Dialog,
   Fieldset,
   Form,
   Input,
   Label,
-  Sheet,
   Spinner,
   Unspaced,
   XStack,
+  YStack,
 } from "tamagui";
 import { z } from "zod";
 import { Point, useEditPoint } from "~/data/points";
 import { Server } from "~/data/servers";
 
 const schema = z.object({
+  id: z.number(),
   label: z
     .string()
     .min(3, { message: "Label must be at least 3 characters long" }),
-  x: z.number(),
-  y: z.number(),
-  z: z.number(),
+  x: z.coerce.number(),
+  y: z.coerce.number(),
+  z: z.coerce.number(),
   // server_id: z.number().optional(),
 });
 
@@ -65,30 +65,17 @@ export const EditPointModal = ({
 
   return (
     <Dialog modal>
-      <Dialog.Trigger bg="$colorTransparent" borderColor="$colorTransparent">
-        <Button theme="gray" flexGrow={1}>
+      <Dialog.Trigger asChild>
+        <Button theme="gray" flexGrow={1} icon={Pencil}>
           Edit Location
         </Button>
       </Dialog.Trigger>
 
-      <Adapt when="sm" platform="touch">
-        <Sheet animation="medium" zIndex={200000} modal dismissOnSnapToBottom>
-          <Sheet.Frame padding="$4" gap="$4">
-            <Adapt.Contents />
-          </Sheet.Frame>
-          <Sheet.Overlay
-            animation="lazy"
-            enterStyle={{ opacity: 0 }}
-            exitStyle={{ opacity: 0 }}
-          />
-        </Sheet>
-      </Adapt>
-
       <Dialog.Portal>
         <Dialog.Overlay
           key="overlay"
-          animation="slow"
-          opacity={0.5}
+          animation="quicker"
+          opacity={0.8}
           enterStyle={{ opacity: 0 }}
           exitStyle={{ opacity: 0 }}
         />
@@ -108,78 +95,87 @@ export const EditPointModal = ({
             ]}
             enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
             exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
-            gap="$4"
+            gap="$8"
           >
             <Dialog.Title>Edit Location</Dialog.Title>
 
-            <Controller
-              name="label"
-              control={control}
-              render={({ field }) => (
-                <Fieldset gap="$4" horizontal borderColor="$colorTransparent">
-                  <Label htmlFor="name">Label</Label>
-                  <Input {...field} flex={1} id="label" autoComplete="off" />
-                </Fieldset>
-              )}
-            />
+            <YStack gap="$5" px="$3">
+              <Controller
+                name="label"
+                control={control}
+                render={({ field }) => (
+                  <XStack alignItems="center" gap="$3">
+                    <Label htmlFor="name">Label</Label>
+                    <Input {...field} flex={1} id="label" autoComplete="off" />
+                  </XStack>
+                )}
+              />
 
-            <Controller
-              name="x"
-              control={control}
-              render={({ field }) => (
-                <Fieldset gap="$4" horizontal borderColor="$colorTransparent">
-                  <Label htmlFor="name">X</Label>
-                  <Input
-                    {...field}
-                    value={field.value.toString()}
-                    flex={1}
-                    id="x"
-                    autoComplete="off"
-                  />
-                </Fieldset>
-              )}
-            />
+              <XStack gap="$3">
+                <Controller
+                  name="x"
+                  control={control}
+                  render={({ field }) => (
+                    <XStack alignItems="center" gap="$3">
+                      <Label htmlFor="name">X</Label>
+                      <Input
+                        {...field}
+                        value={field.value.toString()}
+                        flex={1}
+                        id="x"
+                        autoComplete="off"
+                        selectTextOnFocus
+                        keyboardType="numeric"
+                        maxWidth="$8"
+                      />
+                    </XStack>
+                  )}
+                />
 
-            <Controller
-              name="y"
-              control={control}
-              render={({ field }) => (
-                <Fieldset gap="$4" horizontal borderColor="$colorTransparent">
-                  <Label htmlFor="name">Y</Label>
-                  <Input
-                    {...field}
-                    value={field.value.toString()}
-                    flex={1}
-                    id="y"
-                    autoComplete="off"
-                  />
-                </Fieldset>
-              )}
-            />
+                <Controller
+                  name="y"
+                  control={control}
+                  render={({ field }) => (
+                    <XStack alignItems="center" gap="$3">
+                      <Label htmlFor="name">Y</Label>
+                      <Input
+                        {...field}
+                        value={field.value.toString()}
+                        flex={1}
+                        id="y"
+                        autoComplete="off"
+                        selectTextOnFocus
+                        maxWidth="$8"
+                      />
+                    </XStack>
+                  )}
+                />
 
-            <Controller
-              name="z"
-              control={control}
-              render={({ field }) => (
-                <Fieldset gap="$4" horizontal borderColor="$colorTransparent">
-                  <Label htmlFor="name">Z</Label>
-                  <Input
-                    {...field}
-                    value={field.value.toString()}
-                    flex={1}
-                    id="z"
-                    autoComplete="off"
-                  />
-                </Fieldset>
-              )}
-            />
+                <Controller
+                  name="z"
+                  control={control}
+                  render={({ field }) => (
+                    <XStack alignItems="center" gap="$3">
+                      <Label htmlFor="name">Z</Label>
+                      <Input
+                        {...field}
+                        value={field.value.toString()}
+                        flex={1}
+                        id="z"
+                        autoComplete="off"
+                        selectTextOnFocus
+                        maxWidth="$8"
+                      />
+                    </XStack>
+                  )}
+                />
+              </XStack>
+            </YStack>
 
             <XStack alignSelf="flex-end" gap="$4">
-              <Form.Trigger
-                borderColor="$colorTransparent"
-                bg="$colorTransparent"
-              >
+              <Form.Trigger asChild>
                 <Button
+                  themeInverse={!success}
                   theme={success ? "green" : "active"}
                   disabled={isSubmitting || isLoading}
                   icon={

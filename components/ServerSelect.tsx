@@ -1,9 +1,7 @@
 import {
-  Adapt,
   FontSizeTokens,
   Select,
   SelectProps,
-  Sheet,
   YStack,
   getFontSize,
 } from "tamagui";
@@ -31,41 +29,15 @@ export const ServerSelect = (props: SelectProps) => {
       disablePreventBodyScroll
       {...props}
     >
-      <Select.Trigger iconAfter={ChevronDown}>
+      <Select.Trigger iconAfter={ChevronDown} maxWidth="$20">
         <Select.Value placeholder="Select Server" />
       </Select.Trigger>
-
-      <Adapt when="sm" platform="touch">
-        <Sheet
-          native={!!props.native}
-          modal
-          dismissOnSnapToBottom
-          animationConfig={{
-            type: "spring",
-            damping: 20,
-            mass: 1.2,
-            stiffness: 250,
-          }}
-        >
-          <Sheet.Frame>
-            <Sheet.ScrollView>
-              <Adapt.Contents />
-            </Sheet.ScrollView>
-          </Sheet.Frame>
-          <Sheet.Overlay
-            animation="lazy"
-            enterStyle={{ opacity: 0 }}
-            exitStyle={{ opacity: 0 }}
-          />
-        </Sheet>
-      </Adapt>
 
       <Select.Content zIndex={200000}>
         <Select.ScrollUpButton
           alignItems="center"
           justifyContent="center"
           position="relative"
-          width="100%"
           height="$3"
         >
           <YStack zIndex={10}>
@@ -80,14 +52,7 @@ export const ServerSelect = (props: SelectProps) => {
           />
         </Select.ScrollUpButton>
 
-        <Select.Viewport
-        // to do animations:
-        // animation="quick"
-        // animateOnly={["transform", "opacity"]}
-        // enterStyle={{ o: 0, y: -10 }}
-        // exitStyle={{ o: 0, y: 10 }}
-        // minWidth={200}
-        >
+        <Select.Viewport>
           <Select.Group>
             {/* for longer lists memoizing these is useful */}
             {useMemo(
@@ -128,7 +93,6 @@ export const ServerSelect = (props: SelectProps) => {
           alignItems="center"
           justifyContent="center"
           position="relative"
-          width="100%"
           height="$3"
         >
           <YStack zIndex={10}>

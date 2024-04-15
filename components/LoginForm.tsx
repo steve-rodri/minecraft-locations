@@ -66,8 +66,9 @@ export default function LoginForm() {
           </>
         )}
       />
-      <Form.Trigger borderColor="$colorTransparent" p={0} m={0} mt="$5">
+      <Form.Trigger asChild>
         <Button
+          mt="$5"
           disabled={isLoading || isSubmitting}
           icon={isLoading || isSubmitting ? () => <Spinner /> : undefined}
           themeInverse

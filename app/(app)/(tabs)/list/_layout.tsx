@@ -5,7 +5,14 @@ export default function ListLayout() {
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
 
-      <Stack.Screen name="point/[id]" options={{ title: "" }} />
+      <Stack.Screen
+        name="point/[id]"
+        options={{
+          title: "",
+          headerStyle: { backgroundColor: "transparent" },
+          headerShadowVisible: false,
+        }}
+      />
     </Stack>
   );
 }

@@ -7,7 +7,7 @@ import { SplashScreen, Stack } from "expo-router";
 import { TamaguiProvider } from "tamagui";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ToastProvider, ToastViewport } from "@tamagui/toast";
+import { ToastProvider } from "@tamagui/toast";
 
 import "../tamagui-web.css";
 
@@ -15,6 +15,8 @@ import { config } from "../tamagui.config";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import { CurrentToast } from "~/components/CurrentToast";
+import { AuthProvider } from "~/components/AuthContext";
+import { useColorScheme } from "react-native";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -52,27 +54,19 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = "light";
+  const colorScheme = useColorScheme();
 
   return (
     <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <ToastProvider>
           <QueryClientProvider client={queryClient}>
-            <Stack>
-              <Stack.Screen name="(app)" options={{ headerShown: false }} />
-              <Stack.Screen name="sign-in" options={{ headerShown: false }} />
-            </Stack>
+            <AuthProvider>
+              <Stack screenOptions={{ headerShown: false }} />
+            </AuthProvider>
             {/* <ReactQueryDevtools initialIsOpen={false} /> */}
           </QueryClientProvider>
           <CurrentToast />
-          <ToastViewport
-            flexDirection="column-reverse"
-            bottom={75}
-            right={0}
-            left={0}
-            multipleToasts={false}
-          />
         </ToastProvider>
       </ThemeProvider>
     </TamaguiProvider>

@@ -58,7 +58,7 @@ export const AddPointForm = () => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Stack gap="$5">
-        <XStack gap="$2" width="86%">
+        <XStack gap="$2" w="100%">
           <Label>Server: </Label>
           <ServerSelect />
         </XStack>
@@ -127,7 +127,7 @@ export const AddPointForm = () => {
             )}
           />
         </XStack>
-        <Form.Trigger bg="$colorTransparent" borderColor="$colorTransparent">
+        <Form.Trigger asChild>
           <Button
             mt="lg"
             themeInverse={!success}

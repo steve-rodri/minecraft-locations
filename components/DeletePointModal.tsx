@@ -1,6 +1,6 @@
-import { X } from "@tamagui/lucide-icons";
+import { Trash, X } from "@tamagui/lucide-icons";
 import { router } from "expo-router";
-import { Adapt, Button, Dialog, Sheet, Unspaced, XStack } from "tamagui";
+import { Button, Dialog, Unspaced, XStack } from "tamagui";
 import { Point, useDeletePoint } from "~/data/points";
 import { Server } from "~/data/servers";
 
@@ -9,28 +9,15 @@ export const DeletePointModal = ({
 }: {
   point: Point & { server: Server | null };
 }) => {
-  const { mutate: deletePoint, error } = useDeletePoint();
+  const { mutateAsync: deletePoint, error } = useDeletePoint();
 
   return (
     <Dialog modal>
-      <Dialog.Trigger bg="$colorTransparent" borderColor="$colorTransparent">
-        <Button theme="red" flexGrow={1}>
+      <Dialog.Trigger asChild>
+        <Button theme="red" flexGrow={1} icon={Trash} variant="outlined">
           Delete Location
         </Button>
       </Dialog.Trigger>
-
-      <Adapt when="sm" platform="touch">
-        <Sheet animation="medium" zIndex={200000} modal dismissOnSnapToBottom>
-          <Sheet.Frame padding="$4" gap="$4">
-            <Adapt.Contents />
-          </Sheet.Frame>
-          <Sheet.Overlay
-            animation="lazy"
-            enterStyle={{ opacity: 0 }}
-            exitStyle={{ opacity: 0 }}
-          />
-        </Sheet>
-      </Adapt>
 
       <Dialog.Portal>
         <Dialog.Overlay
@@ -63,20 +50,22 @@ export const DeletePointModal = ({
           </Dialog.Description>
 
           <XStack alignSelf="flex-end" gap="$4">
-            <Dialog.Close>
+            <Dialog.Close asChild>
               <Button
+                size="$5"
                 theme="red"
-                onPress={() => {
-                  console.log("works");
-                  deletePoint(point.id);
-                  router.back();
+                onPress={async () => {
+                  const resp = await deletePoint(point.id);
+                  if (resp.success) router.back();
                 }}
               >
                 Yes
               </Button>
             </Dialog.Close>
-            <Dialog.Close>
-              <Button theme="active">No</Button>
+            <Dialog.Close asChild>
+              <Button theme="active" size="$5">
+                No
+              </Button>
             </Dialog.Close>
           </XStack>
 
