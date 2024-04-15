@@ -1,5 +1,5 @@
-import { useGlobalSearchParams, useLocalSearchParams } from "expo-router";
-import { H2, H3, View, Text, YStack, XStack, H4, ScrollView } from "tamagui";
+import { useLocalSearchParams } from "expo-router";
+import { H2, H3, View, Text, YStack, XStack, H4 } from "tamagui";
 import { DeletePointModal } from "~/components/DeletePointModal";
 import { EditPointModal } from "~/components/EditPointModal";
 import { useServerContext } from "~/components/ServerContext";
@@ -12,8 +12,6 @@ export default function PointDetail() {
     Number(Array.isArray(id) ? id[0] : id),
     serverCtx.selected
   );
-
-  console.log(point);
 
   if (isLoading) {
     return (
@@ -44,8 +42,8 @@ export default function PointDetail() {
     <YStack
       flex={1}
       bg="$background"
-      mx="$4"
-      mb="$4"
+      px="$4"
+      pb="$4"
       justifyContent="space-between"
     >
       <YStack gap="$6">
