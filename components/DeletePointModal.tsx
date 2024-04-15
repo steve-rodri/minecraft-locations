@@ -54,6 +54,7 @@ export const DeletePointModal = ({
               <Button
                 size="$5"
                 theme="red"
+                variant="outlined"
                 onPress={async () => {
                   const resp = await deletePoint(point.id);
                   if (resp.success) router.back();
