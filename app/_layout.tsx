@@ -4,7 +4,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { SplashScreen, Stack } from "expo-router";
-import { TamaguiProvider } from "tamagui";
+import { TamaguiProvider, View } from "tamagui";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastProvider } from "@tamagui/toast";
@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { CurrentToast } from "~/components/CurrentToast";
 import { AuthProvider } from "~/components/AuthContext";
 import { useColorScheme } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -62,7 +63,9 @@ function RootLayoutNav() {
         <ToastProvider>
           <QueryClientProvider client={queryClient}>
             <AuthProvider>
-              <Stack screenOptions={{ headerShown: false }} />
+              <View flex={1} bg="$background">
+                <Stack screenOptions={{ headerShown: false }} />
+              </View>
             </AuthProvider>
             {/* <ReactQueryDevtools initialIsOpen={false} /> */}
           </QueryClientProvider>

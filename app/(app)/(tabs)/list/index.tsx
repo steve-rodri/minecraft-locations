@@ -8,13 +8,14 @@ import { FAB } from "~/components/FAB";
 import { BottomSheet } from "~/components/BottomSheet";
 import { AddPointForm } from "~/components/AddPointForm";
 import { useState } from "react";
+import { SafeAreaXView } from "~/components/SafeAreaView";
 
 export default function ListScreen() {
   const ctx = useServerContext();
   const { data: points } = useGetPoints(ctx.selected?.id);
   const [open, setOpen] = useState(false);
   return (
-    <>
+    <SafeAreaXView bg="$background" flex={1}>
       <Header />
       <View flex={1} alignItems="center" bg="$background">
         <ScrollView w="100%" showsVerticalScrollIndicator={false}>
@@ -31,7 +32,7 @@ export default function ListScreen() {
       <BottomSheet open={open} setOpen={setOpen} title="Add Location">
         <AddPointForm />
       </BottomSheet>
-    </>
+    </SafeAreaXView>
   );
 }
 
