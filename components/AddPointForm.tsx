@@ -21,9 +21,9 @@ const schema = z.object({
   label: z
     .string()
     .min(3, { message: "Label must be at least 3 characters long" }),
-  x: z.number(),
-  y: z.number(),
-  z: z.number(),
+  x: z.coerce.number(),
+  y: z.coerce.number(),
+  z: z.coerce.number(),
 });
 
 export const AddPointForm = () => {
