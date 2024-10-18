@@ -1,5 +1,5 @@
 import { H2, YStack, Text } from "tamagui";
-import ChangePasswordForm from "~/components/ChangePasswordForm";
+import ChangePasswordForm from "../components/ChangePasswordForm";
 
 export default function ChangePassword() {
   return (

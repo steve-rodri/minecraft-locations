@@ -1,5 +1,5 @@
 import { H2, YStack, Text } from "tamagui";
-import CreatePasswordForm from "~/components/CreatePasswordForm";
+import CreatePasswordForm from "../components/CreatePasswordForm";
 
 export default function CreatePassword() {
   return (

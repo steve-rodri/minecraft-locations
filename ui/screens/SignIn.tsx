@@ -1,5 +1,5 @@
 import { H2, YStack, Text } from "tamagui";
-import LoginForm from "~/components/LoginForm";
+import LoginForm from "../components/LoginForm";
 
 export default function SignIn() {
   return (

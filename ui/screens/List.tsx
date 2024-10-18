@@ -1,14 +1,16 @@
+import { useState } from "react";
 import { router } from "expo-router";
 import { ChevronRight, MapPin } from "@tamagui/lucide-icons";
 import { ListItem, ScrollView, Separator, View, YGroup } from "tamagui";
-import { useServerContext } from "~/context/ServerContext";
-import { Header } from "~/components/Header";
-import { Point, useGetPoints } from "~/api/points";
-import { FAB } from "~/components/FAB";
-import { BottomSheet } from "~/components/BottomSheet";
-import { AddPointForm } from "~/components/AddPointForm";
-import { useState } from "react";
-import { SafeAreaXView } from "~/components/SafeAreaView";
+
+import { useGetPoints } from "~/api/points";
+import { Point } from "~/interfaces/IPointRepository";
+import { AddPointForm } from "../components/AddPointForm";
+import { BottomSheet } from "../components/BottomSheet";
+import { FAB } from "../components/FAB";
+import { Header } from "../components/Header";
+import { SafeAreaXView } from "../components/SafeAreaView";
+import { useServerContext } from "../context/ServerContext";
 
 export default function ListScreen() {
   const ctx = useServerContext();
