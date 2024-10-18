@@ -1,4 +1,4 @@
-import { YStack, H2, XStack, H5, View } from "tamagui";
+import { YStack, H2, XStack, View } from "tamagui";
 import { ServerSelect } from "./ServerSelect";
 import { AccountModal } from "./AccountModal";
 import { ToastViewport } from "@tamagui/toast";
@@ -23,7 +23,6 @@ export const Header = () => {
           </View>
         </XStack>
         <XStack alignItems="center" gap="$2" justifyContent="center" w="100%">
-          {/* <H5 textTransform="capitalize">Server:</H5> */}
           <ServerSelect />
         </XStack>
       </YStack>

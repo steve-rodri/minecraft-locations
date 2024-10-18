@@ -15,14 +15,10 @@ import { config } from "../tamagui.config";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import { CurrentToast } from "~/components/CurrentToast";
-import { AuthProvider } from "~/components/AuthContext";
+import { AuthProvider } from "~/context/AuthContext";
 import { useColorScheme } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
+export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -56,7 +52,6 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-
   return (
     <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
@@ -67,7 +62,7 @@ function RootLayoutNav() {
                 <Stack screenOptions={{ headerShown: false }} />
               </View>
             </AuthProvider>
-            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+            <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
           <CurrentToast />
         </ToastProvider>

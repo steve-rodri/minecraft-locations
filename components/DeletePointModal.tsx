@@ -9,7 +9,7 @@ export const DeletePointModal = ({
 }: {
   point: Point & { server: Server | null };
 }) => {
-  const { mutateAsync: deletePoint, error } = useDeletePoint();
+  const { mutateAsync: deletePoint } = useDeletePoint();
 
   return (
     <Dialog modal>

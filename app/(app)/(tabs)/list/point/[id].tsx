@@ -3,7 +3,7 @@ import { H2, H3, View, Text, YStack, XStack, H4 } from "tamagui";
 import { DeletePointModal } from "~/components/DeletePointModal";
 import { EditPointModal } from "~/components/EditPointModal";
 import { SafeAreaXView } from "~/components/SafeAreaView";
-import { useServerContext } from "~/components/ServerContext";
+import { useServerContext } from "~/context/ServerContext";
 import { useGetPoint } from "~/data/points";
 
 export default function PointDetail() {

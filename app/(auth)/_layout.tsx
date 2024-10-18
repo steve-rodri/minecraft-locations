@@ -1,6 +1,6 @@
 import { Redirect, Slot } from "expo-router";
 import { YStack, Text } from "tamagui";
-import { useAuthContext } from "~/components/AuthContext";
+import { useAuthContext } from "~/context/AuthContext";
 
 export default function AuthLayout() {
   const { session, loading } = useAuthContext();

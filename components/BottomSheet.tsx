@@ -1,7 +1,7 @@
 import { ChevronDown } from "@tamagui/lucide-icons";
 import { Sheet } from "@tamagui/sheet";
 import { ReactNode } from "react";
-import { Button, H2, View, XGroup, XStack } from "tamagui";
+import { Button, H2, XStack } from "tamagui";
 
 export const BottomSheet = ({
   open,
@@ -33,12 +33,7 @@ export const BottomSheet = ({
 
       <Sheet.Handle />
 
-      <Sheet.Frame
-        padding="$6"
-        // justifyContent="center"
-        alignItems="center"
-        space="$5"
-      >
+      <Sheet.Frame padding="$6" alignItems="center" space="$5">
         <XStack alignItems="flex-start" justifyContent="space-between" w="100%">
           <H2>{title}</H2>
           <Button

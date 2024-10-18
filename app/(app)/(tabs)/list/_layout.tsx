@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import { useColorScheme } from "react-native";
-import Colors from "~/constants/Colors";
+import colors from "~/constants/colors";
 
 export default function ListLayout() {
   const colorScheme = useColorScheme();
@@ -15,8 +15,8 @@ export default function ListLayout() {
           headerStyle: {
             backgroundColor:
               colorScheme === "light"
-                ? Colors.light.background
-                : Colors.dark.background,
+                ? colors.light.background
+                : colors.dark.background,
           },
           headerShadowVisible: false,
         }}
