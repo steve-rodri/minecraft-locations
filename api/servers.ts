@@ -1,14 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "~/lib/supabase";
-
-export const getServers = async () => {
-  const { data: servers } = await supabase.from("servers").select("id, name");
-
-  return servers ?? [];
-};
+import { serverRepo } from "~/repositories";
 
 export const useGetServers = () => {
-  return useQuery({ queryKey: ["servers"], queryFn: async () => getServers() });
+  return useQuery({
+    queryKey: ["servers"],
+    queryFn: async () => serverRepo.getServers(),
+  });
 };
-
-export type Server = Awaited<ReturnType<typeof getServers>>[0];
