@@ -5,12 +5,12 @@ import { ListItem, ScrollView, Separator, View, YGroup } from "tamagui";
 
 import { useGetPoints } from "~/api/points";
 import { Point } from "~/interfaces/IPointRepository";
-import { AddPointForm } from "../components/AddPointForm";
-import { BottomSheet } from "../components/BottomSheet";
-import { FAB } from "../components/FAB";
-import { Header } from "../components/Header";
-import { SafeAreaXView } from "../components/SafeAreaView";
-import { useServerContext } from "../context/ServerContext";
+import { AddPointForm } from "../../components/AddPointForm";
+import { BottomSheet } from "../../components/BottomSheet";
+import { FAB } from "../../components/FAB";
+import { Header } from "../../components/Header";
+import { SafeAreaXView } from "../../components/SafeAreaView";
+import { useServerContext } from "../../context/ServerContext";
 
 export default function ListScreen() {
   const ctx = useServerContext();

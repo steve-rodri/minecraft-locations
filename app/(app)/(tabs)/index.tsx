@@ -1,2 +1,2 @@
-import Map from "~/ui/screens/map/Map";
-export default Map;
+import MapScreen from "~/ui/screens/map-screen/MapScreen";
+export default MapScreen;
