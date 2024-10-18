@@ -1,7 +1,7 @@
 import { useToastController } from "@tamagui/toast";
 import { TouchableOpacity } from "react-native";
 import { Circle } from "tamagui";
-import { Point } from "~/api/points";
+import { Point } from "~/interfaces/IPointRepository";
 
 type ScaledPoint = Point & { scaledX: number; scaledZ: number };
 

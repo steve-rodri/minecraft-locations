@@ -14,8 +14,9 @@ import {
   YStack,
 } from "tamagui";
 import { z } from "zod";
-import { Point, useEditPoint } from "~/api/points";
-import { Server } from "~/api/servers";
+import { useEditPoint } from "~/api/points";
+import { Server } from "~/interfaces/IServerRepository";
+import { Point } from "~/interfaces/IPointRepository";
 
 const schema = z.object({
   id: z.number(),
@@ -40,7 +41,7 @@ export const EditPointModal = ({
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting, isLoading },
+    formState: { isSubmitting, isLoading },
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {

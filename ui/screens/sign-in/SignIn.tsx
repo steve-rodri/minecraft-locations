@@ -1,5 +1,5 @@
 import { H2, YStack, Text } from "tamagui";
-import LoginForm from "../components/LoginForm";
+import SignInForm from "./SignInForm";
 
 export default function SignIn() {
   return (
@@ -14,7 +14,7 @@ export default function SignIn() {
         <H2>Minecraft Locations</H2>
         <Text>Sign in to Minecraft Locations</Text>
       </YStack>
-      <LoginForm />
+      <SignInForm />
     </YStack>
   );
 }

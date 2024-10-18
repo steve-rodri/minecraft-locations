@@ -13,7 +13,8 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { Point, useCreatePoint } from "~/api/points";
+import { useCreatePoint } from "~/api/points";
+import { Point } from "~/interfaces/IPointRepository";
 import { useServerContext } from "../context/ServerContext";
 import { ServerSelect } from "./ServerSelect";
 

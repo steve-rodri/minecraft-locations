@@ -1,5 +1,5 @@
 import { ScaledPoint } from "./ScaledPoint";
-import { Point } from "~/api/points";
+import { Point } from "~/interfaces/IPointRepository";
 
 export const Map = ({ points }: { points: Point[] }) => {
   // Assuming your map dimensions are known

@@ -1,17 +1,18 @@
 import { Alert } from "react-native";
-import { supabase } from "~/lib/supabase";
 import { Button, Input, Form, Label, Spinner } from "tamagui";
-import { z } from "zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { supabase } from "~/lib/supabase";
 
 const schema = z.object({
   email: z.string().email(),
   password: z.string(),
 });
 
-export default function LoginForm() {
+export default function SignInForm() {
   const {
     control,
     handleSubmit,

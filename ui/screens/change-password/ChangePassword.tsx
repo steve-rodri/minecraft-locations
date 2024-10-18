@@ -1,14 +1,14 @@
 import { H2, YStack, Text } from "tamagui";
-import CreatePasswordForm from "../components/CreatePasswordForm";
+import ChangePasswordForm from "./ChangePasswordForm";
 
-export default function CreatePassword() {
+export default function ChangePassword() {
   return (
     <YStack flex={1} justifyContent="center" alignItems="center" gap="$4">
       <YStack alignItems="center" gap="$1">
         <H2>Minecraft Locations</H2>
-        <Text>Create Your Password</Text>
+        <Text>Change Your Password</Text>
       </YStack>
-      <CreatePasswordForm />
+      <ChangePasswordForm />
     </YStack>
   );
 }
