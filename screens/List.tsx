@@ -3,7 +3,7 @@ import { ChevronRight, MapPin } from "@tamagui/lucide-icons";
 import { ListItem, ScrollView, Separator, View, YGroup } from "tamagui";
 import { useServerContext } from "~/context/ServerContext";
 import { Header } from "~/components/Header";
-import { Point, useGetPoints } from "~/data/points";
+import { Point, useGetPoints } from "~/api/points";
 import { FAB } from "~/components/FAB";
 import { BottomSheet } from "~/components/BottomSheet";
 import { AddPointForm } from "~/components/AddPointForm";

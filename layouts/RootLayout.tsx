@@ -3,20 +3,20 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { SplashScreen, Stack } from "expo-router";
-import { TamaguiProvider, View } from "tamagui";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastProvider } from "@tamagui/toast";
-
-import "../tamagui-web.css";
-
-import { config } from "../tamagui.config";
 import { useFonts } from "expo-font";
+import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
+import { useColorScheme } from "react-native";
+import { TamaguiProvider, View } from "tamagui";
+
 import { CurrentToast } from "~/components/CurrentToast";
 import { AuthProvider } from "~/context/AuthContext";
-import { useColorScheme } from "react-native";
+
+import { config } from "../tamagui.config";
+import "../tamagui-web.css";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -25,33 +25,23 @@ export const unstable_settings = {
   initialRouteName: "(tabs)",
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
+  const colorScheme = useColorScheme();
   const [interLoaded, interError] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });
 
   useEffect(() => {
-    if (interLoaded || interError) {
-      // Hide the splash screen after the fonts have loaded (or an error was returned) and the UI is ready.
-      SplashScreen.hideAsync();
-    }
+    if (interLoaded || interError) SplashScreen.hideAsync();
   }, [interLoaded, interError]);
 
-  if (!interLoaded && !interError) {
-    return null;
-  }
+  if (!interLoaded && !interError) return null;
 
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
   return (
     <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>

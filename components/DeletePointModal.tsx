@@ -1,8 +1,8 @@
 import { Trash, X } from "@tamagui/lucide-icons";
 import { router } from "expo-router";
 import { Button, Dialog, Unspaced, XStack } from "tamagui";
-import { Point, useDeletePoint } from "~/data/points";
-import { Server } from "~/data/servers";
+import { Point, useDeletePoint } from "~/api/points";
+import { Server } from "~/api/servers";
 
 export const DeletePointModal = ({
   point,

@@ -9,7 +9,7 @@ import { useServerContext } from "~/context/ServerContext";
 import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { useEffect, useMemo } from "react";
-import { useGetServers } from "~/data/servers";
+import { useGetServers } from "~/api/servers";
 
 export const ServerSelect = (props: SelectProps) => {
   const { selected, setSelected } = useServerContext();

@@ -14,8 +14,8 @@ import {
   YStack,
 } from "tamagui";
 import { z } from "zod";
-import { Point, useEditPoint } from "~/data/points";
-import { Server } from "~/data/servers";
+import { Point, useEditPoint } from "~/api/points";
+import { Server } from "~/api/servers";
 
 const schema = z.object({
   id: z.number(),

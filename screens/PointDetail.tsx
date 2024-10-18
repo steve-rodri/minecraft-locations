@@ -4,7 +4,7 @@ import { DeletePointModal } from "~/components/DeletePointModal";
 import { EditPointModal } from "~/components/EditPointModal";
 import { SafeAreaXView } from "~/components/SafeAreaView";
 import { useServerContext } from "~/context/ServerContext";
-import { useGetPoint } from "~/data/points";
+import { useGetPoint } from "~/api/points";
 
 export default function PointDetail() {
   const { id } = useLocalSearchParams();

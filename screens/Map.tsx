@@ -1,7 +1,7 @@
 import { ScrollView } from "tamagui";
 import { Map } from "~/components/Map";
 import { Header } from "~/components/Header";
-import { useGetPoints } from "~/data/points";
+import { useGetPoints } from "~/api/points";
 import { useServerContext } from "~/context/ServerContext";
 import { FAB } from "~/components/FAB";
 import { BottomSheet } from "~/components/BottomSheet";

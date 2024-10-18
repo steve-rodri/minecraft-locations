@@ -1,5 +1,5 @@
 import { ScaledPoint } from "./ScaledPoint";
-import { Point } from "~/data/points";
+import { Point } from "~/api/points";
 
 export const Map = ({ points }: { points: Point[] }) => {
   // Assuming your map dimensions are known
