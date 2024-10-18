@@ -1,2 +1,2 @@
-import List from "~/screens/List";
+import List from "~/ui/screens/List";
 export default List;

@@ -1,2 +1,2 @@
-import NotFoundScreen from "~/screens/404";
+import NotFoundScreen from "~/ui/screens/404";
 export default NotFoundScreen;

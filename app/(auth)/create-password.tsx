@@ -1,2 +1,2 @@
-import CreatePassword from "~/screens/CreatePassword";
+import CreatePassword from "~/ui/screens/CreatePassword";
 export default CreatePassword;

@@ -1,6 +1,6 @@
 import { Redirect, Stack } from "expo-router";
 import { YStack, Text } from "tamagui";
-import { useAuthContext } from "~/context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function AppLayout() {
   const { session, type, loading } = useAuthContext();

@@ -5,7 +5,7 @@ import {
   YStack,
   getFontSize,
 } from "tamagui";
-import { useServerContext } from "~/context/ServerContext";
+import { useServerContext } from "../context/ServerContext";
 import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { useEffect, useMemo } from "react";

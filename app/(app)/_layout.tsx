@@ -1,2 +1,2 @@
-import AppLayout from "~/layouts/AppLayout";
+import AppLayout from "~/ui/layouts/AppLayout";
 export default AppLayout;

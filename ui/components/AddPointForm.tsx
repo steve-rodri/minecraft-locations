@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import { Point, useCreatePoint } from "~/api/points";
-import { useServerContext } from "~/context/ServerContext";
+import { useServerContext } from "../context/ServerContext";
 import { ServerSelect } from "./ServerSelect";
 
 const schema = z.object({

@@ -6,7 +6,7 @@ import {
   useContext,
   useState,
 } from "react";
-import { Server } from "~/data/servers";
+import { Server } from "~/api/servers";
 
 type Context = {
   selected: Server | null;

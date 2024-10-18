@@ -12,11 +12,10 @@ import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { TamaguiProvider, View } from "tamagui";
 
-import { CurrentToast } from "~/components/CurrentToast";
-import { AuthProvider } from "~/context/AuthContext";
-
-import { config } from "../tamagui.config";
-import "../tamagui-web.css";
+import { config } from "~/tamagui.config";
+import "~/tamagui-web.css";
+import { AuthProvider } from "../context/AuthContext";
+import { CurrentToast } from "../components/CurrentToast";
 
 export { ErrorBoundary } from "expo-router";
 
