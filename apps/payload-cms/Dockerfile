@@ -18,7 +18,7 @@ WORKDIR /home/node/app
 COPY package*.json  ./
 COPY bun.lockb ./
 
-RUN bunn install
+RUN bun install
 COPY --from=builder /home/node/app/dist ./dist
 COPY --from=builder /home/node/app/build ./build
 
