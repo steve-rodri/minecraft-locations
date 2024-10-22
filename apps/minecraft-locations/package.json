@@ -25,6 +25,7 @@
     "@tanstack/react-query": "*",
     "@testing-library/jest-native": "*",
     "@testing-library/react-native": "*",
+    "@tanstack/react-query-devtools": "*",
     "expo": "*",
     "expo-linear-gradient": "*",
     "expo-linking": "*",
@@ -50,7 +51,6 @@
   "devDependencies": {
     "@babel/core": "*",
     "@tanstack/eslint-plugin-query": "*",
-    "@tanstack/react-query-devtools": "*",
     "@types/react": "*",
     "babel-preset-expo": "*",
     "typescript": "*"
