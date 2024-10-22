@@ -19,11 +19,11 @@
     "@payloadcms/bundler-webpack": "*",
     "@payloadcms/plugin-cloud": "*",
     "@payloadcms/richtext-slate": "*",
+    "@payloadcms/db-postgres": "*",
     "cross-env": "*",
     "dotenv": "*",
     "express": "*",
-    "payload": "*",
-    "@payloadcms/db-postgres": "*"
+    "payload": "*"
   },
   "devDependencies": {
     "@types/express": "*",
