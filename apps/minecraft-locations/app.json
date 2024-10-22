@@ -4,11 +4,11 @@
     "slug": "minecraft-locations",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./ui/assets/images/icon.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "minecraftlocations",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./ui/assets/images/splash.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,14 +18,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./ui/assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "single",
-      "favicon": "./ui/assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png"
     },
     "plugins": ["expo-router", "expo-font"],
     "experiments": {
