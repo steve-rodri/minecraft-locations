@@ -1,7 +1,6 @@
 {
   "name": "minecraft-locations",
   "private": true,
-  "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
     "upgrade:tamagui": "yarn up '*tamagui*'@latest '@tamagui/*'@latest",
