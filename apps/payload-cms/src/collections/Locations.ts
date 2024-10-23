@@ -1,7 +1,7 @@
 import { CollectionConfig } from "payload/types"
 
-const Points: CollectionConfig = {
-  slug: "points",
+const Locations: CollectionConfig = {
+  slug: "locations",
   admin: {
     useAsTitle: "label",
   },
@@ -19,4 +19,4 @@ const Points: CollectionConfig = {
   ],
 }
 
-export default Points
+export default Locations
