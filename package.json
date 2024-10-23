@@ -2,7 +2,9 @@
   "name": "@org/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev": "npx nx run-many -t dev --parallel"
+  },
   "private": true,
   "dependencies": {
     "@expo/metro-config": "~0.18.1",
