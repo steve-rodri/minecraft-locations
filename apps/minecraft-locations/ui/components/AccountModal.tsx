@@ -1,10 +1,11 @@
-import { Button, Dialog, ListItem, Unspaced } from "tamagui";
-import { ChevronRight, Key, LogOut, User, X } from "@tamagui/lucide-icons";
-import { router } from "expo-router";
-import { supabase } from "~/lib/supabase";
-import { TouchableOpacity } from "react-native";
+import { Button, Dialog, ListItem, Unspaced } from "tamagui"
+import { ChevronRight, Key, LogOut, User, X } from "@tamagui/lucide-icons"
+import { router } from "expo-router"
+import { TouchableOpacity } from "react-native"
+import { useAuthContext } from "../context/AuthContext"
 
 export const AccountModal = () => {
+  const authCtx = useAuthContext()
   return (
     <Dialog>
       <Dialog.Trigger asChild>
@@ -61,7 +62,10 @@ export const AccountModal = () => {
               hoverTheme
               pressTheme
               radiused
-              onPress={() => supabase.auth.signOut()}
+              onPress={() => {
+                authCtx.logOut()
+                router.push("/")
+              }}
             />
           </Dialog.Close>
           <Unspaced>
@@ -79,5 +83,5 @@ export const AccountModal = () => {
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog>
-  );
-};
+  )
+}

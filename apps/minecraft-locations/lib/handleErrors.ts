@@ -14,11 +14,11 @@ export const handleError = ({
 }
 
 export const getErrorMessage = (error: unknown): string | null => {
-  if (error instanceof Error) {
-    return error.message
-  }
   if (error instanceof AxiosError) {
     return getFormattedAxiosError(error)
+  }
+  if (error instanceof Error) {
+    return error.message
   }
   return null
 }
@@ -31,7 +31,6 @@ export const sendAlert = (message: string) => {
   }
 }
 
-// Define types for the error structure
 type ErrorReason = { message: string }
 type ErrorResponse = { message: string; data: ErrorReason[] }
 type ErrorResponseData = { errors: ErrorResponse[] }
@@ -48,29 +47,25 @@ export function getFormattedAxiosError(error: AxiosError): string {
 
 function isErrorRespData(value: unknown): value is ErrorResponseData {
   return (
-    typeof value === "object" && // Check if it's an object
-    value !== null && // Ensure it's not null
-    "errors" in value && // Check if the `errors` key exists
-    Array.isArray(value.errors) && // Ensure `errors` is an array
+    typeof value === "object" &&
+    value !== null &&
+    "errors" in value &&
+    Array.isArray(value.errors) &&
     value.errors.every((error) => isErrorResponse(error))
   )
 }
 
 function isErrorResponse(value: unknown): value is ErrorResponse {
   return (
-    typeof value === "object" && // Check if it's an object
-    value !== null && // Ensure it's not null
-    "message" in value && // Check if the `message` key exists
-    "data" in value && // Check if the `data` key exists
-    Array.isArray(value.data) && // Ensure `data` is an array
+    typeof value === "object" &&
+    value !== null &&
+    "message" in value &&
+    "data" in value &&
+    Array.isArray(value.data) &&
     value.data.every((error) => isErrorReason(error))
   )
 }
 
 function isErrorReason(value: unknown): value is ErrorReason {
-  return (
-    typeof value === "object" && // Check if it's an object
-    value !== null && // Ensure it's not null
-    "message" in value // Check if the `message` key exists
-  )
+  return typeof value === "object" && value !== null && "message" in value
 }

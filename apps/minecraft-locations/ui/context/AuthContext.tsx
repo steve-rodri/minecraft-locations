@@ -22,8 +22,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return { success: true }
   }
 
-  const logOut = async () => {
+  const logOut = () => {
     setSession(null)
+    authRepo.logOut()
   }
 
   useEffect(() => {

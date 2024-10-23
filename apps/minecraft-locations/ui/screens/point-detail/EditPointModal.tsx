@@ -16,7 +16,7 @@ import {
 import { z } from "zod"
 import { useEditPoint } from "../../../api/points"
 import { Point, PointWithServer } from "../../../interfaces/IPointRepository"
-import { handleError } from '../../../lib/handleErrors';
+import { handleError } from "../../../lib/handleErrors"
 
 const schema = z.object({
   id: z.number(),
@@ -181,7 +181,7 @@ export const EditPointModal = ({ point }: { point: PointWithServer }) => {
                     isSubmitting || isLoading ? () => <Spinner /> : undefined
                   }
                 >
-                  Save changes
+                  {success ? "Changes Saved" : "Save Changes"}
                 </Button>
               </Form.Trigger>
             </XStack>

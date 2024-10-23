@@ -1,11 +1,10 @@
-import { Alert } from "react-native";
-import { supabase } from "~/lib/supabase";
-import { Button, Input, Form, Label, Spinner } from "tamagui";
-import { z } from "zod";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { router } from "expo-router";
-import { useEffect, useState } from "react";
+// import { Alert } from "react-native"
+import { Button, Input, Form, Label, Spinner } from "tamagui"
+import { z } from "zod"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { router } from "expo-router"
+// import { useEffect, useState } from "react"
 
 const schema = z
   .object({
@@ -21,16 +20,16 @@ const schema = z
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
-  });
+  })
 
 export default function LoginForm() {
-  const [email, setEmail] = useState<string>();
+  // const [email, setEmail] = useState<string>()
 
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) setEmail(user.email);
-    });
-  }, []);
+  // useEffect(() => {
+  //   supabase.auth.getUser().then(({ data: { user } }) => {
+  //     if (user) setEmail(user.email)
+  //   })
+  // }, [])
 
   const {
     control,
@@ -42,18 +41,16 @@ export default function LoginForm() {
       password: "",
       confirmPassword: "",
     },
-  });
-  const onSubmit: SubmitHandler<z.infer<typeof schema>> = async ({
-    password,
-  }) => {
-    const { error } = await supabase.auth.updateUser({ password });
-    await supabase.auth.signOut();
-    if (error) {
-      Alert.alert(error.message);
-      return;
-    }
-    router.replace("/");
-  };
+  })
+  const onSubmit: SubmitHandler<z.infer<typeof schema>> = async () => {
+    // const { error } = await supabase.auth.updateUser({ password });
+    // await supabase.auth.signOut();
+    // if (error) {
+    //   Alert.alert(error.message);
+    //   return;
+    // }
+    router.replace("/")
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} minWidth="$20">
@@ -62,7 +59,7 @@ export default function LoginForm() {
         <Input
           disabled
           bg="$colorTransparent"
-          value={email}
+          // value={email}
           textContentType="emailAddress"
           placeholder="Email"
           autoCapitalize="none"
@@ -111,5 +108,5 @@ export default function LoginForm() {
         </Button>
       </Form.Trigger>
     </Form>
-  );
+  )
 }

@@ -5,6 +5,7 @@ import { router } from "expo-router"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useAuthContext } from "../../../ui/context/AuthContext"
+import { handleError } from "../../../lib/handleErrors"
 
 const schema = z.object({
   email: z.string().email(),
@@ -26,12 +27,16 @@ export default function SignInForm() {
   })
 
   const onSubmit: SubmitHandler<z.infer<typeof schema>> = async (data) => {
-    const { success } = await logIn(data)
-    if (!success) {
-      Alert.alert("Error", "Invalid email or password")
-      return
+    try {
+      const { success } = await logIn(data)
+      if (!success) {
+        Alert.alert("Error", "Invalid email or password")
+        return
+      }
+      router.replace("/")
+    } catch (error) {
+      handleError({ error, shouldAlert: true })
     }
-    router.replace("/")
   }
 
   return (

@@ -7,6 +7,7 @@ import { router } from "expo-router"
 import { useState } from "react"
 import { useAuthContext } from "../../context/AuthContext"
 import { authRepo } from "../../../repositories/index"
+import { handleError } from "../../../lib/handleErrors"
 
 const schema = z
   .object({
@@ -44,23 +45,27 @@ export default function ChangePasswordForm() {
   const onSubmit: SubmitHandler<z.infer<typeof schema>> = async ({
     newPassword,
   }) => {
-    const { success } = await authRepo.resetPassword({
-      password: newPassword,
-      token: authCtx.session ?? "",
-    })
-    if (!success) {
-      Alert.alert(
-        "Error",
-        "You must be logged in to change your password, try refreshing."
-      )
-      return
+    try {
+      const { success } = await authRepo.resetPassword({
+        password: newPassword,
+        token: authCtx.session ?? "",
+      })
+      if (!success) {
+        Alert.alert(
+          "Error",
+          "You must be logged in to change your password, try refreshing."
+        )
+        return
+      }
+      setSuccess(true)
+      setTimeout(() => {
+        setSuccess(false)
+        if (router.canGoBack()) router.back()
+        else router.replace("/")
+      }, 1500)
+    } catch (error) {
+      handleError({ error, shouldAlert: true })
     }
-    setSuccess(true)
-    setTimeout(() => {
-      setSuccess(false)
-      if (router.canGoBack()) router.back()
-      else router.replace("/")
-    }, 1500)
   }
 
   return (

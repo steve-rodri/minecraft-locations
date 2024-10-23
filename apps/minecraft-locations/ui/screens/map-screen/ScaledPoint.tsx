@@ -1,14 +1,14 @@
-import { useToastController } from "@tamagui/toast";
-import { TouchableOpacity } from "react-native";
-import { Circle } from "tamagui";
-import { Point } from "~/interfaces/IPointRepository";
+import { useToastController } from "@tamagui/toast"
+import { TouchableOpacity } from "react-native"
+import { Circle } from "tamagui"
+import { Point } from "../../../interfaces/IPointRepository"
 
-type ScaledPoint = Point & { scaledX: number; scaledZ: number };
+type ScaledPoint = Point & { scaledX: number; scaledZ: number }
 
 export const ScaledPoint = ({ point }: { point: ScaledPoint }) => {
-  const red = point.y >= 0 ? 255 : 255 - Math.abs(point.y);
-  const blue = point.y <= 0 ? 255 : 255 - point.y;
-  const toast = useToastController();
+  const red = point.y >= 0 ? 255 : 255 - Math.abs(point.y)
+  const blue = point.y <= 0 ? 255 : 255 - point.y
+  const toast = useToastController()
   return (
     <TouchableOpacity
       onPress={() =>
@@ -27,5 +27,5 @@ export const ScaledPoint = ({ point }: { point: ScaledPoint }) => {
         transform={"translate(-50%, -50%)"}
       />
     </TouchableOpacity>
-  );
-};
+  )
+}
