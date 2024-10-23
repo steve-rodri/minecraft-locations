@@ -15,6 +15,8 @@ export default buildConfig({
     user: Users.slug,
     bundler: webpackBundler(),
   },
+  cors: ["http://localhost:8082"],
+  csrf: ["http://localhost:8082"],
   editor: slateEditor({}),
   collections: [Users, Servers, Locations],
   typescript: {

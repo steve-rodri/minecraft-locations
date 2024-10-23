@@ -22,6 +22,7 @@ const start = async () => {
   // Add your own express routes here
 
   app.listen(4100)
+  console.log("App is running on http://localhost:4100")
 }
 
 start()

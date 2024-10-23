@@ -17,14 +17,14 @@ export class AuthRepository implements IAuthRepository {
   }
 
   async currentUser(): Promise<CurrentUserResponse | null> {
-    const response = await this.axios.post<CurrentUserResponse | null>(
+    const response = await this.axios.get<CurrentUserResponse | null>(
       "/users/me"
     )
     return response.data
   }
 
   async signUp(credentials: Credentials): Promise<SignUpResponse | null> {
-    const response = await this.axios.post<SignUpResponse>(
+    const response = await this.axios.post<SignUpResponse | null>(
       "/users",
       credentials
     )
@@ -32,7 +32,7 @@ export class AuthRepository implements IAuthRepository {
   }
 
   async logIn(credentials: Credentials): Promise<LoginResponse | null> {
-    const response = await this.axios.post<LoginResponse>(
+    const response = await this.axios.post<LoginResponse | null>(
       "/users/login",
       credentials
     )

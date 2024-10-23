@@ -1,78 +1,62 @@
-import { EmailOtpType, Session } from "@supabase/supabase-js";
-import { useGlobalSearchParams } from "expo-router";
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { supabase } from "~/lib/supabase";
+import { createContext, ReactNode, useContext, useEffect } from "react"
+import { useStorageState } from "../../hooks/useSessionState"
 
-interface AuthContext {
-  loading: boolean;
-  session: Session | null;
-  type?: EmailOtpType;
-}
+import { authRepo } from "../../repositories/index"
+import { Credentials, User } from "../../interfaces/IAuthRepository"
 
-const AuthContext = createContext<AuthContext>({
-  loading: true,
-  session: null,
-  type: "magiclink",
-});
+const AuthContext = createContext<{
+  logIn: (values: Credentials) => Promise<{ success: boolean }>
+  logOut: () => void
+  session?: string | null
+  user?: User | null
+  isLoading: boolean
+} | null>(null)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
-  const { token, type } = useGlobalSearchParams<{
-    email?: string;
-    token?: string;
-    type?: EmailOtpType;
-  }>();
+  const [[isLoading, session], setSession] = useStorageState("session")
 
-  console.log(token);
+  const logIn = async (credentials: Credentials) => {
+    const resp = await authRepo.logIn(credentials)
+    if (!resp) return { success: false }
+    setSession(resp.token)
+    return { success: true }
+  }
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
-    });
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-    return subscription.unsubscribe;
-  }, []);
+  const logOut = async () => {
+    setSession(null)
+  }
 
   useEffect(() => {
-    const login = async (token_hash: string) => {
-      const {
-        data: { session },
-      } = await supabase.auth.verifyOtp({ token_hash, type: "invite" });
-      console.log("session", session);
-      setSession(session);
-    };
-    if (token) login(token);
-  }, [token]);
+    const mount = async () => {
+      const resp = await authRepo.currentUser()
+      if (resp) {
+        setSession(resp.token)
+      } else {
+        setSession(null)
+        authRepo.logOut()
+      }
+    }
+    mount()
+  }, [setSession])
 
   return (
     <AuthContext.Provider
       value={{
+        logIn,
+        logOut,
         session,
-        loading,
-        type,
+        isLoading,
       }}
     >
       {children}
     </AuthContext.Provider>
-  );
-};
+  )
+}
 
 export const useAuthContext = () => {
-  const authCtx = useContext(AuthContext);
-  if (!authCtx) {
-    throw Error("useAuthContext must be used within an AuthProvider");
+  const value = useContext(AuthContext)
+  if (!value) {
+    throw new Error("useSession must be wrapped in a <SessionProvider />")
   }
-  return authCtx;
-};
+  return value
+}

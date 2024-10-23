@@ -1,11 +1,12 @@
-import { Alert } from "react-native";
-import { supabase } from "~/lib/supabase";
-import { Button, Input, Form, Label, Spinner } from "tamagui";
-import { z } from "zod";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { router } from "expo-router";
-import { useState } from "react";
+import { Alert } from "react-native"
+import { Button, Input, Form, Label, Spinner } from "tamagui"
+import { z } from "zod"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { router } from "expo-router"
+import { useState } from "react"
+import { useAuthContext } from "../../context/AuthContext"
+import { authRepo } from "../../../repositories/index"
 
 const schema = z
   .object({
@@ -22,7 +23,7 @@ const schema = z
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
-  });
+  })
 
 export default function ChangePasswordForm() {
   const {
@@ -36,24 +37,31 @@ export default function ChangePasswordForm() {
       newPassword: "",
       confirmPassword: "",
     },
-  });
-  const [success, setSuccess] = useState(false);
+  })
+  const [success, setSuccess] = useState(false)
+  const authCtx = useAuthContext()
 
   const onSubmit: SubmitHandler<z.infer<typeof schema>> = async ({
     newPassword,
   }) => {
-    const { error } = await supabase.auth.updateUser({ password: newPassword });
-    if (error) {
-      Alert.alert(error.message);
-      return;
+    const { success } = await authRepo.resetPassword({
+      password: newPassword,
+      token: authCtx.session ?? "",
+    })
+    if (!success) {
+      Alert.alert(
+        "Error",
+        "You must be logged in to change your password, try refreshing."
+      )
+      return
     }
-    setSuccess(true);
+    setSuccess(true)
     setTimeout(() => {
-      setSuccess(false);
-      if (router.canGoBack()) router.back();
-      else router.replace("/");
-    }, 1500);
-  };
+      setSuccess(false)
+      if (router.canGoBack()) router.back()
+      else router.replace("/")
+    }, 1500)
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} minWidth="$20">
@@ -118,5 +126,5 @@ export default function ChangePasswordForm() {
         </Button>
       </Form.Trigger>
     </Form>
-  );
+  )
 }

@@ -1,11 +1,11 @@
-import { Redirect, Slot } from "expo-router";
-import { YStack, Text } from "tamagui";
-import { useAuthContext } from "../context/AuthContext";
+import { Redirect, Slot } from "expo-router"
+import { YStack, Text } from "tamagui"
+import { useAuthContext } from "../context/AuthContext"
 
 export default function AuthLayout() {
-  const { session, loading } = useAuthContext();
+  const { session, isLoading } = useAuthContext()
 
-  if (loading) {
+  if (isLoading) {
     return (
       <YStack
         flex={1}
@@ -15,12 +15,12 @@ export default function AuthLayout() {
       >
         <Text>Loading...</Text>
       </YStack>
-    );
+    )
   }
 
   if (session) {
-    return <Redirect href="/" />;
+    return <Redirect href="/" />
   }
 
-  return <Slot />;
+  return <Slot />
 }

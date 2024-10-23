@@ -1,18 +1,18 @@
-import { Alert } from "react-native";
-import { Button, Input, Form, Label, Spinner } from "tamagui";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { router } from "expo-router";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { supabase } from "~/lib/supabase";
+import { Alert } from "react-native"
+import { Button, Input, Form, Label, Spinner } from "tamagui"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import { router } from "expo-router"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useAuthContext } from "../../../ui/context/AuthContext"
 
 const schema = z.object({
   email: z.string().email(),
   password: z.string(),
-});
+})
 
 export default function SignInForm() {
+  const { logIn } = useAuthContext()
   const {
     control,
     handleSubmit,
@@ -23,16 +23,16 @@ export default function SignInForm() {
       email: "",
       password: "",
     },
-  });
+  })
 
   const onSubmit: SubmitHandler<z.infer<typeof schema>> = async (data) => {
-    const { error } = await supabase.auth.signInWithPassword(data);
-    if (error) {
-      Alert.alert(error.message);
-      return;
+    const { success } = await logIn(data)
+    if (!success) {
+      Alert.alert("Error", "Invalid email or password")
+      return
     }
-    router.replace("/");
-  };
+    router.replace("/")
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} minWidth="$20">
@@ -78,5 +78,5 @@ export default function SignInForm() {
         </Button>
       </Form.Trigger>
     </Form>
-  );
+  )
 }
