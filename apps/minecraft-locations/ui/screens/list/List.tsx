@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { router } from "expo-router"
-import { ChevronRight, mapping } from "@tamagui/lucide-icons"
+import { ChevronRight, MapPin } from "@tamagui/lucide-icons" // codespell:ignore
 import { ListItem, ScrollView, Separator, View, YGroup } from "tamagui"
 
 import { useGetPoints } from "../../../api/points"
@@ -42,7 +42,7 @@ export default function ListScreen() {
 const Item = ({ point }: { point: Point }) => {
   return (
     <ListItem
-      icon={mapping}
+      icon={MapPin} // codespell:ignore
       iconAfter={ChevronRight}
       size="$4"
       title={point.label}
