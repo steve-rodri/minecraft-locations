@@ -1,4 +1,4 @@
-import RootLayout from "~/ui/layouts/RootLayout";
-export default RootLayout;
+import RootLayout from "../ui/layouts/RootLayout"
+export default RootLayout
 
-export * from "~/ui/layouts/RootLayout";
+export * from "../ui/layouts/RootLayout"

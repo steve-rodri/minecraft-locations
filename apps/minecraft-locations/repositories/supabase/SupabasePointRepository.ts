@@ -1,9 +1,5 @@
-import { supabase } from "~/lib/supabase";
-import {
-  CreatePointData,
-  EditPointData,
-  IPointRepository,
-} from "~/interfaces/IPointRepository";
+import { supabase } from '../../lib/supabase';
+import { CreatePointData, EditPointData, IPointRepository } from '../../interfaces/IPointRepository';
 
 export class SupabasePointRepository implements IPointRepository {
   async getPoint(id = 1) {

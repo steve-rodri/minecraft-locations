@@ -1,5 +1,5 @@
-import { supabase } from "~/lib/supabase";
-import { IServerRepository } from "~/interfaces/IServerRepository";
+import { supabase } from '../../lib/supabase';
+import { IServerRepository } from '../../interfaces/IServerRepository';
 
 export class SupabaseServerRepository implements IServerRepository {
   async getServers() {

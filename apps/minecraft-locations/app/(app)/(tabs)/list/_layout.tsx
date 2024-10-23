@@ -1,2 +1,2 @@
-import ListLayout from "~/ui/layouts/ListLayout";
-export default ListLayout;
+import ListLayout from "../../../../ui/layouts/ListLayout"
+export default ListLayout

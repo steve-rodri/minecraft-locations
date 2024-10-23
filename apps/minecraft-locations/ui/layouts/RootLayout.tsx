@@ -42,12 +42,12 @@ export default function RootLayout() {
   if (!interLoaded && !interError) return null
 
   return (
-    <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
+    <TamaguiProvider config={config} defaultTheme={colorScheme as string}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <ToastProvider>
           <QueryClientProvider client={queryClient}>
             <AuthProvider>
-              <View flex={1} bg="$background">
+              <View flex={1} background="$background">
                 <Stack screenOptions={{ headerShown: false }} />
               </View>
             </AuthProvider>

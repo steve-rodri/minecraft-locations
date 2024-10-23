@@ -16,11 +16,8 @@ import { z } from "zod"
 import { useCreatePoint } from "../../api/points"
 import { Point } from "../../interfaces/IPointRepository"
 import { useServerContext } from "../context/ServerContext"
+import { handleError } from "../../lib/handleErrors"
 import { ServerSelect } from "./ServerSelect"
-import { Alert, Platform } from "react-native"
-import { AxiosError } from "axios"
-import { getFormattedAxiosError } from "../../lib/getFormattedAxiosError"
-import { getErrorMessage, handleError, sendAlert } from "../../lib/handleErrors"
 
 const schema = z.object({
   label: z
