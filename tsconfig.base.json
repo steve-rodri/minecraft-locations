@@ -15,9 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["apps/minecraft-locations/*"],
-      "@/*": ["apps/payload-cms/src/*"],
-      "payload/generated-types": ["apps/payload-cms/src/payload-types.ts"]
+      "payload/generated-types": ["apps/payload-cms/src/payload-types.ts"],
     }
   },
   "exclude": ["node_modules", "tmp"]
