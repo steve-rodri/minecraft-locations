@@ -1,5 +1,15 @@
-import { SupabasePointRepository } from "./supabase/SupabasePointRepository"
-import { SupabaseServerRepository } from "./supabase/SupabaseServerRepository"
+import { AuthRepository } from "./AuthRepository"
+import { PointRepository } from "./PointRepository"
+import { ServerRepository } from "./ServerRepository"
+import axios from "axios"
 
-export const pointRepo = new SupabasePointRepository()
-export const serverRepo = new SupabaseServerRepository()
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:4100/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+})
+
+export const authRepo = new AuthRepository(axiosInstance)
+export const pointRepo = new PointRepository(axiosInstance)
+export const serverRepo = new ServerRepository(axiosInstance)

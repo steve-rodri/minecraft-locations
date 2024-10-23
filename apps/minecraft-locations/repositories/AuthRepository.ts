@@ -1,34 +1,50 @@
 import {
   IAuthRepository,
   Credentials,
-  User,
   ResetPasswordArgs,
+  SignUpResponse,
+  LoginResponse,
+  ResetPasswordResponse,
+  CurrentUserResponse,
 } from "../interfaces/IAuthRepository"
 import axios, { AxiosInstance } from "axios"
 
 export class AuthRepository implements IAuthRepository {
-  axios: AxiosInstance = axios.create()
+  private axios: AxiosInstance = axios.create()
 
   constructor(axiosInstance: AxiosInstance) {
     this.axios = axiosInstance
   }
 
-  async signUp(credentials: Credentials): Promise<User | null> {}
+  async currentUser(): Promise<CurrentUserResponse | null> {
+    const response = await this.axios.post<CurrentUserResponse | null>(
+      "/users/me"
+    )
+    return response.data
+  }
 
-  async logIn(credentials: Credentials): Promise<User | null> {
-    const response = await axios.post<LoginResponse>(
+  async signUp(credentials: Credentials): Promise<SignUpResponse | null> {
+    const response = await this.axios.post<SignUpResponse>(
+      "/users",
+      credentials
+    )
+    return response.data
+  }
+
+  async logIn(credentials: Credentials): Promise<LoginResponse | null> {
+    const response = await this.axios.post<LoginResponse>(
       "/users/login",
       credentials
     )
-    return response.data.user
+    return response.data
   }
 
   async logOut(): Promise<void> {
-    await axios.post<{ message: string }>("/users/logout")
+    await this.axios.post<{ message: string }>("/users/logout")
   }
 
   async resetPassword(args: ResetPasswordArgs): Promise<{ success: boolean }> {
-    const response = await axios.post<ResetPasswordResponse>(
+    const response = await this.axios.post<ResetPasswordResponse>(
       "/users/reset-password",
       args
     )
@@ -37,32 +53,9 @@ export class AuthRepository implements IAuthRepository {
   }
 
   async forgotPassword(email: string): Promise<{ success: boolean }> {
-    await axios.post<{ message: string }>("/users/forgot-password", { email })
+    await this.axios.post<{ message: string }>("/users/forgot-password", {
+      email,
+    })
     return { success: true }
-  }
-}
-
-type LoginResponse = {
-  message: string
-  user: {
-    id: string
-    email: string
-    _verified: boolean
-    createdAt: string
-    updatedAt: string
-  }
-  token: string
-  exp: number
-}
-
-type ResetPasswordResponse = {
-  message: string
-  token: string
-  user: {
-    id: string
-    email: string
-    _verified: boolean
-    createdAt: string
-    updatedAt: string
   }
 }
