@@ -11,7 +11,7 @@ export type PayloadDocResponse<T> = {
   totalPages: number
 }
 
-export type PayloadCreateResponse<T> = {
+export type PayloadMutationResponse<T> = {
   doc: T
   message: string
 }

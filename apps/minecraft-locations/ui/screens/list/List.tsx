@@ -13,8 +13,8 @@ import { SafeAreaXView } from "../../components/SafeAreaView"
 import { useServerContext } from "../../context/ServerContext"
 
 export default function ListScreen() {
-  const ctx = useServerContext()
-  const { data } = useGetPoints(ctx.selected?.id)
+  const serverCtx = useServerContext()
+  const { data } = useGetPoints(serverCtx.selected?.id)
   const [open, setOpen] = useState(false)
   const points = data?.docs
   return (

@@ -1,16 +1,16 @@
-import { Trash, X } from "@tamagui/lucide-icons";
-import { router } from "expo-router";
-import { Button, Dialog, Unspaced, XStack } from "tamagui";
-import { useDeletePoint } from "~/api/points";
-import { Server } from "~/interfaces/IServerRepository";
-import { Point } from "~/interfaces/IPointRepository";
+import { Trash, X } from "@tamagui/lucide-icons"
+import { router } from "expo-router"
+import { Button, Dialog, Unspaced, XStack } from "tamagui"
+import { useDeletePoint } from "../../../api/points"
+import { Server } from "../../../interfaces/IServerRepository"
+import { Point } from "../../../interfaces/IPointRepository"
 
 export const DeletePointModal = ({
   point,
 }: {
-  point: Point & { server: Server | null };
+  point: Point & { server: Server | null }
 }) => {
-  const { mutateAsync: deletePoint } = useDeletePoint();
+  const { mutateAsync: deletePoint } = useDeletePoint()
 
   return (
     <Dialog modal>
@@ -57,8 +57,8 @@ export const DeletePointModal = ({
                 theme="red"
                 variant="outlined"
                 onPress={async () => {
-                  const resp = await deletePoint(point.id);
-                  if (resp.success) router.back();
+                  const resp = await deletePoint(point.id)
+                  if (resp.success) router.back()
                 }}
               >
                 Yes
@@ -86,5 +86,5 @@ export const DeletePointModal = ({
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog>
-  );
-};
+  )
+}

@@ -3,6 +3,7 @@ import {
   EditPointData,
   IPointRepository,
   PointCreateResponse,
+  PointEditResponse,
   PointsResponse,
   PointWithServer,
 } from "../interfaces/IPointRepository"
@@ -38,15 +39,18 @@ export class PointRepository implements IPointRepository {
   }
 
   async editPoint(data: EditPointData) {
-    const response = await this.axios.put<PointsResponse | null>(
+    const response = await this.axios.put<PointEditResponse>(
       `/locations/${data.id}`,
       data
     )
-    return response.data
+    return response.data.doc
   }
 
   async deletePoint(id: number) {
-    const response = await this.axios.delete(`/locations/${id}`)
-    return response.data
+    const response = await this.axios.delete<PointWithServer>(
+      `/locations/${id}`
+    )
+    if (response.status === 200) return { success: true }
+    else return { success: false }
   }
 }
