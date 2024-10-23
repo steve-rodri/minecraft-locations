@@ -1,7 +1,7 @@
-import { YStack, H2, XStack, View } from "tamagui";
-import { ServerSelect } from "./ServerSelect";
-import { AccountModal } from "./AccountModal";
-import { ToastViewport } from "@tamagui/toast";
+import { YStack, H2, XStack, View } from "tamagui"
+import { ServerSelect } from "./ServerSelect"
+import { AccountModal } from "./AccountModal"
+import { ToastViewport } from "@tamagui/toast"
 
 export const Header = () => {
   return (
@@ -33,5 +33,5 @@ export const Header = () => {
         multipleToasts={false}
       />
     </>
-  );
-};
+  )
+}

@@ -1,9 +1,9 @@
-import { Stack } from "expo-router";
-import { useColorScheme } from "react-native";
-import colors from "../constants/colors";
+import { Stack } from "expo-router"
+import { useColorScheme } from "react-native"
+import colors from "../constants/colors"
 
 export default function ListLayout() {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme()
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
@@ -22,5 +22,5 @@ export default function ListLayout() {
         }}
       />
     </Stack>
-  );
+  )
 }

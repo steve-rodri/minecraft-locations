@@ -53,7 +53,7 @@ export default function ChangePasswordForm() {
       if (!success) {
         Alert.alert(
           "Error",
-          "You must be logged in to change your password, try refreshing."
+          "You must be logged in to change your password, try refreshing.",
         )
         return
       }

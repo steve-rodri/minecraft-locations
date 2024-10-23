@@ -1,4 +1,4 @@
-name: 'generate-types'
+name: "generate-types"
 on:
   push:
 jobs:

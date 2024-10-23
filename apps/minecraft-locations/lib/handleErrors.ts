@@ -40,7 +40,7 @@ export function getFormattedAxiosError(error: AxiosError): string {
   if (!isErrorRespData(errorRespData)) return error.message
   return errorRespData.errors
     .map(({ message, data }) =>
-      [message, ...data.map(({ message }) => message)].join("\n")
+      [message, ...data.map(({ message }) => message)].join("\n"),
     )
     .join("\n\n")
 }

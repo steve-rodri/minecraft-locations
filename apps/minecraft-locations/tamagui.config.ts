@@ -1,11 +1,11 @@
-import { config as configBase } from "@tamagui/config/v3";
-import { createTamagui } from "tamagui";
+import { config as configBase } from "@tamagui/config/v3"
+import { createTamagui } from "tamagui"
 
-export const config = createTamagui(configBase);
+export const config = createTamagui(configBase)
 
-export default config;
+export default config
 
-export type Conf = typeof config;
+export type Conf = typeof config
 
 declare module "tamagui" {
   type TamaguiCustomConfig = Conf

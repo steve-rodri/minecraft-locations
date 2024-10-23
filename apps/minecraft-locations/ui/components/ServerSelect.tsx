@@ -72,7 +72,7 @@ export const ServerSelect = (props: SelectProps) => {
                     </Select.Item>
                   )
                 }),
-              [servers]
+              [servers],
             )}
           </Select.Group>
           {/* Native gets an extra icon */}

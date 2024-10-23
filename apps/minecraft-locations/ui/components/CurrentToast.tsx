@@ -1,10 +1,10 @@
-import { Toast, useToastState } from "@tamagui/toast";
-import { YStack } from "tamagui";
+import { Toast, useToastState } from "@tamagui/toast"
+import { YStack } from "tamagui"
 
 export const CurrentToast = () => {
-  const currentToast = useToastState();
+  const currentToast = useToastState()
 
-  if (!currentToast || currentToast.isHandledNatively) return null;
+  if (!currentToast || currentToast.isHandledNatively) return null
   return (
     <Toast
       key={currentToast.id}
@@ -24,5 +24,5 @@ export const CurrentToast = () => {
         )}
       </YStack>
     </Toast>
-  );
-};
+  )
+}

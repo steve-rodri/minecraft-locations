@@ -18,14 +18,14 @@ export class PointRepository implements IPointRepository {
 
   async getPoint(id = 1) {
     const response = await this.axios.get<PointWithServer | null>(
-      `/locations/${id}`
+      `/locations/${id}`,
     )
     return response.data
   }
 
   async getPoints(serverId = 1) {
     const response = await this.axios.get<PointsResponse | null>(
-      `/locations?server_id=${serverId}`
+      `/locations?server_id=${serverId}`,
     )
     return response.data
   }
@@ -33,7 +33,7 @@ export class PointRepository implements IPointRepository {
   async createPoint(data: CreatePointData) {
     const response = await this.axios.post<PointCreateResponse>(
       `/locations`,
-      data
+      data,
     )
     return response.data.doc
   }
@@ -41,14 +41,14 @@ export class PointRepository implements IPointRepository {
   async editPoint(data: EditPointData) {
     const response = await this.axios.put<PointEditResponse>(
       `/locations/${data.id}`,
-      data
+      data,
     )
     return response.data.doc
   }
 
   async deletePoint(id: number) {
     const response = await this.axios.delete<PointWithServer>(
-      `/locations/${id}`
+      `/locations/${id}`,
     )
     if (response.status === 200) return { success: true }
     else return { success: false }

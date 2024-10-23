@@ -5,20 +5,20 @@ import { Platform } from "react-native"
 type UseStateHook<T> = [[boolean, T | null], (value: T | null) => void]
 
 const useAsyncState = <T>(
-  initialValue: [boolean, T | null] = [true, null]
+  initialValue: [boolean, T | null] = [true, null],
 ): UseStateHook<T> => {
   return useReducer(
     (_: [boolean, T | null], action: T | null = null): [boolean, T | null] => [
       false,
       action,
     ],
-    initialValue
+    initialValue,
   ) as UseStateHook<T>
 }
 
 export const setStorageItemAsync = async (
   key: string,
-  value: string | null
+  value: string | null,
 ) => {
   if (Platform.OS === "web") {
     try {
@@ -67,7 +67,7 @@ export const useStorageState = (key: string): UseStateHook<string> => {
         setState(value)
       })
     },
-    [key, setState]
+    [key, setState],
   )
 
   return [state, setValue]

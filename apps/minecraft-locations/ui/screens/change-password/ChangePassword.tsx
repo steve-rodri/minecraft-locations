@@ -1,5 +1,5 @@
-import { H2, YStack, Text } from "tamagui";
-import ChangePasswordForm from "./ChangePasswordForm";
+import { H2, YStack, Text } from "tamagui"
+import ChangePasswordForm from "./ChangePasswordForm"
 
 export default function ChangePassword() {
   return (
@@ -10,5 +10,5 @@ export default function ChangePassword() {
       </YStack>
       <ChangePasswordForm />
     </YStack>
-  );
+  )
 }

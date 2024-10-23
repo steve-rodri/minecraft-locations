@@ -1,8 +1,8 @@
-import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
-import { sql } from 'drizzle-orm'
+import { MigrateUpArgs, MigrateDownArgs } from "@payloadcms/db-postgres"
+import { sql } from "drizzle-orm"
 
 export async function up({ payload }: MigrateUpArgs): Promise<void> {
-await payload.db.drizzle.execute(sql`
+  await payload.db.drizzle.execute(sql`
 
 DO $$ BEGIN
  CREATE TYPE "public"."enum_users_roles" AS ENUM('admin');
@@ -54,12 +54,11 @@ CREATE INDEX IF NOT EXISTS "locations_created_at_idx" ON "locations" USING btree
 CREATE INDEX IF NOT EXISTS "locations_rels_order_idx" ON "locations_rels" USING btree ("order");
 CREATE INDEX IF NOT EXISTS "locations_rels_parent_idx" ON "locations_rels" USING btree ("parent_id");
 CREATE INDEX IF NOT EXISTS "locations_rels_path_idx" ON "locations_rels" USING btree ("path");
-CREATE INDEX IF NOT EXISTS "locations_rels_servers_id_idx" ON "locations_rels" USING btree ("servers_id");`);
-
-};
+CREATE INDEX IF NOT EXISTS "locations_rels_servers_id_idx" ON "locations_rels" USING btree ("servers_id");`)
+}
 
 export async function down({ payload }: MigrateDownArgs): Promise<void> {
-await payload.db.drizzle.execute(sql`
+  await payload.db.drizzle.execute(sql`
 
 DROP TABLE "users_roles";
 ALTER TABLE "locations" RENAME TO "points";
@@ -91,6 +90,5 @@ CREATE INDEX IF NOT EXISTS "points_created_at_idx" ON "points" USING btree ("cre
 CREATE INDEX IF NOT EXISTS "points_rels_order_idx" ON "points_rels" USING btree ("order");
 CREATE INDEX IF NOT EXISTS "points_rels_parent_idx" ON "points_rels" USING btree ("parent_id");
 CREATE INDEX IF NOT EXISTS "points_rels_path_idx" ON "points_rels" USING btree ("path");
-CREATE INDEX IF NOT EXISTS "points_rels_servers_id_idx" ON "points_rels" USING btree ("servers_id");`);
-
-};
+CREATE INDEX IF NOT EXISTS "points_rels_servers_id_idx" ON "points_rels" USING btree ("servers_id");`)
+}

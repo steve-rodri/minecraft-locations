@@ -1,5 +1,5 @@
-import { Plus } from "@tamagui/lucide-icons";
-import { Button } from "tamagui";
+import { Plus } from "@tamagui/lucide-icons"
+import { Button } from "tamagui"
 
 export const FAB = ({ onPress }: { onPress: () => void }) => {
   return (
@@ -15,5 +15,5 @@ export const FAB = ({ onPress }: { onPress: () => void }) => {
     >
       <Plus />
     </Button>
-  );
-};
+  )
+}

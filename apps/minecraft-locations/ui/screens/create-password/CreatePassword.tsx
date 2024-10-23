@@ -1,5 +1,5 @@
-import { H2, YStack, Text } from "tamagui";
-import CreatePasswordForm from "./CreatePasswordForm";
+import { H2, YStack, Text } from "tamagui"
+import CreatePasswordForm from "./CreatePasswordForm"
 
 export default function CreatePassword() {
   return (
@@ -10,5 +10,5 @@ export default function CreatePassword() {
       </YStack>
       <CreatePasswordForm />
     </YStack>
-  );
+  )
 }

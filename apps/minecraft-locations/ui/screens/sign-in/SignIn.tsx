@@ -1,5 +1,5 @@
-import { H2, YStack, Text } from "tamagui";
-import SignInForm from "./SignInForm";
+import { H2, YStack, Text } from "tamagui"
+import SignInForm from "./SignInForm"
 
 export default function SignIn() {
   return (
@@ -16,5 +16,5 @@ export default function SignIn() {
       </YStack>
       <SignInForm />
     </YStack>
-  );
+  )
 }

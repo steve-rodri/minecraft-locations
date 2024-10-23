@@ -1,7 +1,7 @@
-import { ChevronDown } from "@tamagui/lucide-icons";
-import { Sheet } from "@tamagui/sheet";
-import { ReactNode } from "react";
-import { Button, H2, XStack } from "tamagui";
+import { ChevronDown } from "@tamagui/lucide-icons"
+import { Sheet } from "@tamagui/sheet"
+import { ReactNode } from "react"
+import { Button, H2, XStack } from "tamagui"
 
 export const BottomSheet = ({
   open,
@@ -9,10 +9,10 @@ export const BottomSheet = ({
   children,
   title,
 }: {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  title?: string;
-  children?: ReactNode;
+  open: boolean
+  setOpen: (open: boolean) => void
+  title?: string
+  children?: ReactNode
 }) => {
   return (
     <Sheet
@@ -46,5 +46,5 @@ export const BottomSheet = ({
         {children}
       </Sheet.Frame>
     </Sheet>
-  );
-};
+  )
+}

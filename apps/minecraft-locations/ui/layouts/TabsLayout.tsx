@@ -1,10 +1,10 @@
-import { Tabs } from "expo-router";
-import { Map, List } from "@tamagui/lucide-icons";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ServerContextProvider } from "../context/ServerContext";
+import { Tabs } from "expo-router"
+import { Map, List } from "@tamagui/lucide-icons"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { ServerContextProvider } from "../context/ServerContext"
 
 export default function TabLayout() {
-  const { bottom } = useSafeAreaInsets();
+  const { bottom } = useSafeAreaInsets()
   return (
     <ServerContextProvider>
       <Tabs
@@ -29,5 +29,5 @@ export default function TabLayout() {
         />
       </Tabs>
     </ServerContextProvider>
-  );
+  )
 }

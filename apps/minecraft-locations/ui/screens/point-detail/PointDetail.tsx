@@ -11,7 +11,7 @@ export default function PointDetail() {
   const serverCtx = useServerContext()
   const { data: point, isLoading } = useGetPoint(
     Number(Array.isArray(id) ? id[0] : id),
-    serverCtx.selected
+    serverCtx.selected,
   )
 
   if (isLoading) {
