@@ -1,7 +1,7 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Pencil, X } from "@tamagui/lucide-icons";
-import { useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Pencil, X } from "@tamagui/lucide-icons"
+import { useState } from "react"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import {
   Button,
   Dialog,
@@ -12,11 +12,10 @@ import {
   Unspaced,
   XStack,
   YStack,
-} from "tamagui";
-import { z } from "zod";
-import { useEditPoint } from "~/api/points";
-import { Server } from "~/interfaces/IServerRepository";
-import { Point } from "~/interfaces/IPointRepository";
+} from "tamagui"
+import { z } from "zod"
+import { useEditPoint } from "../../../api/points"
+import { Point, PointWithServer } from "../../../interfaces/IPointRepository"
 
 const schema = z.object({
   id: z.number(),
@@ -26,17 +25,12 @@ const schema = z.object({
   x: z.coerce.number(),
   y: z.coerce.number(),
   z: z.coerce.number(),
-  // server_id: z.number().optional(),
-});
+})
 
-export const EditPointModal = ({
-  point,
-}: {
-  point: Point & { server: Server | null };
-}) => {
-  const { mutateAsync: editPoint } = useEditPoint();
+export const EditPointModal = ({ point }: { point: PointWithServer }) => {
+  const { mutateAsync: editPoint } = useEditPoint()
 
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false)
 
   const {
     control,
@@ -51,17 +45,17 @@ export const EditPointModal = ({
       y: point.y,
       z: point.z,
     },
-  });
+  })
 
   const onSubmit: SubmitHandler<Point> = async (data) => {
-    const point = await editPoint(data);
+    const point = await editPoint(data)
     if (point) {
-      setSuccess(true);
+      setSuccess(true)
       setTimeout(() => {
-        setSuccess(false);
-      }, 1500);
+        setSuccess(false)
+      }, 1500)
     }
-  };
+  }
 
   return (
     <Dialog modal>
@@ -203,5 +197,5 @@ export const EditPointModal = ({
         </Form>
       </Dialog.Portal>
     </Dialog>
-  );
-};
+  )
+}

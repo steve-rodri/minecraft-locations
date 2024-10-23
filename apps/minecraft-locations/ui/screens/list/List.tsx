@@ -1,21 +1,22 @@
-import { useState } from "react";
-import { router } from "expo-router";
-import { ChevronRight, MapPin } from "@tamagui/lucide-icons";
-import { ListItem, ScrollView, Separator, View, YGroup } from "tamagui";
+import { useState } from "react"
+import { router } from "expo-router"
+import { ChevronRight, mapping } from "@tamagui/lucide-icons"
+import { ListItem, ScrollView, Separator, View, YGroup } from "tamagui"
 
-import { useGetPoints } from "~/api/points";
-import { Point } from "~/interfaces/IPointRepository";
-import { AddPointForm } from "../../components/AddPointForm";
-import { BottomSheet } from "../../components/BottomSheet";
-import { FAB } from "../../components/FAB";
-import { Header } from "../../components/Header";
-import { SafeAreaXView } from "../../components/SafeAreaView";
-import { useServerContext } from "../../context/ServerContext";
+import { useGetPoints } from "../../../api/points"
+import { Point } from "../../../interfaces/IPointRepository"
+import { AddPointForm } from "../../components/AddPointForm"
+import { BottomSheet } from "../../components/BottomSheet"
+import { FAB } from "../../components/FAB"
+import { Header } from "../../components/Header"
+import { SafeAreaXView } from "../../components/SafeAreaView"
+import { useServerContext } from "../../context/ServerContext"
 
 export default function ListScreen() {
-  const ctx = useServerContext();
-  const { data: points } = useGetPoints(ctx.selected?.id);
-  const [open, setOpen] = useState(false);
+  const ctx = useServerContext()
+  const { data } = useGetPoints(ctx.selected?.id)
+  const [open, setOpen] = useState(false)
+  const points = data?.docs
   return (
     <SafeAreaXView bg="$background" flex={1}>
       <Header />
@@ -35,13 +36,13 @@ export default function ListScreen() {
         <AddPointForm />
       </BottomSheet>
     </SafeAreaXView>
-  );
+  )
 }
 
 const Item = ({ point }: { point: Point }) => {
   return (
     <ListItem
-      icon={MapPin}
+      icon={mapping}
       iconAfter={ChevronRight}
       size="$4"
       title={point.label}
@@ -50,5 +51,5 @@ const Item = ({ point }: { point: Point }) => {
       pressTheme
       onPress={() => router.push(`/list/point/${point.id}`)}
     />
-  );
-};
+  )
+}

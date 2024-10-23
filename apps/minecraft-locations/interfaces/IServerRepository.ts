@@ -1,8 +1,14 @@
+import { PayloadDocResponse } from "../lib/payload.types"
+
 export type Server = {
-  id: number;
-  name: string;
-};
+  id: number
+  name: string
+  updatedAt: string
+  createdAt: string
+}
+
+export type ServerResponse = PayloadDocResponse<Server>
 
 export interface IServerRepository {
-  getServers(): Promise<Server[]>;
+  getServers(): Promise<ServerResponse | null>
 }

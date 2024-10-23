@@ -1,18 +1,18 @@
-import { useLocalSearchParams } from "expo-router";
-import { H2, H3, View, Text, YStack, XStack, H4 } from "tamagui";
-import { DeletePointModal } from "./DeletePointModal";
-import { EditPointModal } from "./EditPointModal";
-import { SafeAreaXView } from "../../components/SafeAreaView";
-import { useServerContext } from "../../context/ServerContext";
-import { useGetPoint } from "~/api/points";
+import { useLocalSearchParams } from "expo-router"
+import { H2, H3, View, Text, YStack, XStack, H4 } from "tamagui"
+import { DeletePointModal } from "./DeletePointModal"
+import { EditPointModal } from "./EditPointModal"
+import { SafeAreaXView } from "../../components/SafeAreaView"
+import { useServerContext } from "../../context/ServerContext"
+import { useGetPoint } from "../../../api/points"
 
 export default function PointDetail() {
-  const { id } = useLocalSearchParams();
-  const serverCtx = useServerContext();
+  const { id } = useLocalSearchParams()
+  const serverCtx = useServerContext()
   const { data: point, isLoading } = useGetPoint(
     Number(Array.isArray(id) ? id[0] : id),
     serverCtx.selected
-  );
+  )
 
   if (isLoading) {
     return (
@@ -24,7 +24,7 @@ export default function PointDetail() {
       >
         <H3>Loading...</H3>
       </View>
-    );
+    )
   }
 
   if (!point)
@@ -37,7 +37,7 @@ export default function PointDetail() {
       >
         <H3>Unable to fetch data for this location</H3>
       </View>
-    );
+    )
 
   return (
     <SafeAreaXView flex={1} bg="$background">
@@ -84,5 +84,5 @@ export default function PointDetail() {
         </XStack>
       </YStack>
     </SafeAreaXView>
-  );
+  )
 }

@@ -1,4 +1,7 @@
-import { IServerRepository } from "../interfaces/IServerRepository"
+import {
+  IServerRepository,
+  ServersResponse,
+} from "../interfaces/IServerRepository"
 import axios, { AxiosInstance } from "axios"
 
 export class ServerRepository implements IServerRepository {
@@ -9,7 +12,7 @@ export class ServerRepository implements IServerRepository {
   }
 
   async getServers() {
-    const response = await this.axios.get(`/servers`)
+    const response = await this.axios.get<ServersResponse | null>(`/servers`)
     return response.data
   }
 }

@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { pointRepo } from "../repositories"
+import { axiosInstance, pointRepo } from "../repositories"
 import { Server } from "../interfaces/IServerRepository"
-import { Point } from "../interfaces/IPointRepository"
+import { CreatePointData, Point } from "../interfaces/IPointRepository"
+import { PointRepository } from "../repositories/PointRepository"
 
 export const useGetPoints = (serverId = 1) => {
   return useQuery({
@@ -33,7 +34,10 @@ export const useCreatePoint = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationKey: ["create-point"],
-    mutationFn: pointRepo.createPoint,
+    mutationFn: async (data: CreatePointData) => {
+      const pointRepo = new PointRepository(axiosInstance)
+      return pointRepo.createPoint(data)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["points"] })
     },

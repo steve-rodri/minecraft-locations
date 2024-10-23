@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import {
   Button,
   Stack,
@@ -9,14 +9,14 @@ import {
   XStack,
   Spinner,
   YStack,
-} from "tamagui";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+} from "tamagui"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
 
-import { useCreatePoint } from "~/api/points";
-import { Point } from "~/interfaces/IPointRepository";
-import { useServerContext } from "../context/ServerContext";
-import { ServerSelect } from "./ServerSelect";
+import { useCreatePoint } from "../../api/points"
+import { Point } from "../../interfaces/IPointRepository"
+import { useServerContext } from "../context/ServerContext"
+import { ServerSelect } from "./ServerSelect"
 
 const schema = z.object({
   label: z
@@ -25,12 +25,12 @@ const schema = z.object({
   x: z.coerce.number(),
   y: z.coerce.number(),
   z: z.coerce.number(),
-});
+})
 
 export const AddPointForm = () => {
-  const { selected: server } = useServerContext();
-  const { mutateAsync: createPoint } = useCreatePoint();
-  const [success, setSuccess] = useState(false);
+  const { selected: server } = useServerContext()
+  const { mutateAsync: createPoint } = useCreatePoint()
+  const [success, setSuccess] = useState(false)
   const {
     control,
     handleSubmit,
@@ -43,18 +43,18 @@ export const AddPointForm = () => {
       y: 0,
       z: 0,
     },
-  });
+  })
 
   const onSubmit: SubmitHandler<Omit<Point, "id">> = async (data) => {
-    if (!server) return;
-    const point = await createPoint({ ...data, server_id: server.id });
+    if (!server) return
+    const point = await createPoint({ ...data, server: server.id })
     if (point) {
-      setSuccess(true);
+      setSuccess(true)
       setTimeout(() => {
-        setSuccess(false);
-      }, 1500);
+        setSuccess(false)
+      }, 1500)
     }
-  };
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -141,5 +141,5 @@ export const AddPointForm = () => {
         </Form.Trigger>
       </Stack>
     </Form>
-  );
-};
+  )
+}

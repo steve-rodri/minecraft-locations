@@ -4,27 +4,28 @@ import {
   SelectProps,
   YStack,
   getFontSize,
-} from "tamagui";
-import { useServerContext } from "../context/ServerContext";
-import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
-import { LinearGradient } from "tamagui/linear-gradient";
-import { useEffect, useMemo } from "react";
-import { useGetServers } from "~/api/servers";
+} from "tamagui"
+import { useServerContext } from "../context/ServerContext"
+import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons"
+import { LinearGradient } from "tamagui/linear-gradient"
+import { useEffect, useMemo } from "react"
+import { useGetServers } from '../../api/servers';
 
 export const ServerSelect = (props: SelectProps) => {
-  const { selected, setSelected } = useServerContext();
-  const { data: servers } = useGetServers();
+  const { selected, setSelected } = useServerContext()
+  const { data } = useGetServers()
+  const servers = data?.docs
 
   useEffect(() => {
-    if (servers) setSelected(servers[0]);
-  }, [servers]);
+    if (servers) setSelected(servers[0])
+  }, [servers, setSelected])
 
   return (
     <Select
       value={selected?.name}
       onValueChange={(value) => {
-        const server = servers?.find((s) => s.name === value);
-        if (server) setSelected(server);
+        const server = servers?.find((s) => s.name === value)
+        if (server) setSelected(server)
       }}
       disablePreventBodyScroll
       {...props}
@@ -65,7 +66,7 @@ export const ServerSelect = (props: SelectProps) => {
                         <Check size={16} />
                       </Select.ItemIndicator>
                     </Select.Item>
-                  );
+                  )
                 }),
               [servers]
             )}
@@ -108,5 +109,5 @@ export const ServerSelect = (props: SelectProps) => {
         </Select.ScrollDownButton>
       </Select.Content>
     </Select>
-  );
-};
+  )
+}
