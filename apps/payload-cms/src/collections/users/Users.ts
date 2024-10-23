@@ -1,8 +1,10 @@
 import { CollectionConfig } from "payload/types"
+import adminsAndUser from "./access/adminsAndUser"
 import { admins } from "../../access/admins"
 import { anyone } from "../../access/anyone"
-import adminsAndUser from "./access/adminsAndUser"
 import { ensureFirstUserIsAdmin } from "./hooks/ensureFirstUserIsAdmin"
+import { loginAfterCreate } from "./hooks/loginAfterCreate"
+import { protectRoles } from "./hooks/protectRoles"
 import { checkRole } from "./util/checkRole"
 
 const Users: CollectionConfig = {
@@ -18,6 +20,9 @@ const Users: CollectionConfig = {
     delete: admins,
     admin: ({ req: { user } }) => checkRole(["admin"], user),
   },
+  hooks: {
+    afterChange: [loginAfterCreate],
+  },
   fields: [
     {
       name: "roles",
@@ -29,8 +34,9 @@ const Users: CollectionConfig = {
           value: "admin",
         },
       ],
+      saveToJWT: true,
       hooks: {
-        beforeChange: [ensureFirstUserIsAdmin],
+        beforeChange: [ensureFirstUserIsAdmin, protectRoles],
       },
       access: {
         read: admins,
