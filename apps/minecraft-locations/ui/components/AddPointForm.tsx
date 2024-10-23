@@ -17,6 +17,10 @@ import { useCreatePoint } from "../../api/points"
 import { Point } from "../../interfaces/IPointRepository"
 import { useServerContext } from "../context/ServerContext"
 import { ServerSelect } from "./ServerSelect"
+import { Alert, Platform } from "react-native"
+import { AxiosError } from "axios"
+import { getFormattedAxiosError } from "../../lib/getFormattedAxiosError"
+import { getErrorMessage, handleError, sendAlert } from "../../lib/handleErrors"
 
 const schema = z.object({
   label: z
@@ -47,12 +51,16 @@ export const AddPointForm = () => {
 
   const onSubmit: SubmitHandler<Omit<Point, "id">> = async (data) => {
     if (!server) return
-    const point = await createPoint({ ...data, server: server.id })
-    if (point) {
-      setSuccess(true)
-      setTimeout(() => {
-        setSuccess(false)
-      }, 1500)
+    try {
+      const point = await createPoint({ ...data, server: server.id })
+      if (point) {
+        setSuccess(true)
+        setTimeout(() => {
+          setSuccess(false)
+        }, 1500)
+      }
+    } catch (error) {
+      handleError({ error, shouldAlert: true })
     }
   }
 

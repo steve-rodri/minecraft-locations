@@ -16,6 +16,7 @@ import {
 import { z } from "zod"
 import { useEditPoint } from "../../../api/points"
 import { Point, PointWithServer } from "../../../interfaces/IPointRepository"
+import { handleError } from '../../../lib/handleErrors';
 
 const schema = z.object({
   id: z.number(),
@@ -48,12 +49,16 @@ export const EditPointModal = ({ point }: { point: PointWithServer }) => {
   })
 
   const onSubmit: SubmitHandler<Point> = async (data) => {
-    const point = await editPoint(data)
-    if (point) {
-      setSuccess(true)
-      setTimeout(() => {
-        setSuccess(false)
-      }, 1500)
+    try {
+      const point = await editPoint(data)
+      if (point) {
+        setSuccess(true)
+        setTimeout(() => {
+          setSuccess(false)
+        }, 1500)
+      }
+    } catch (error) {
+      handleError({ error, shouldAlert: true })
     }
   }
 

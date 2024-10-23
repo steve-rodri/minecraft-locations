@@ -4,6 +4,7 @@ import { Button, Dialog, Unspaced, XStack } from "tamagui"
 import { useDeletePoint } from "../../../api/points"
 import { Server } from "../../../interfaces/IServerRepository"
 import { Point } from "../../../interfaces/IPointRepository"
+import { handleError } from "../../../lib/handleErrors"
 
 export const DeletePointModal = ({
   point,
@@ -11,6 +12,15 @@ export const DeletePointModal = ({
   point: Point & { server: Server | null }
 }) => {
   const { mutateAsync: deletePoint } = useDeletePoint()
+
+  const handleDelete = async () => {
+    try {
+      const resp = await deletePoint(point.id)
+      if (resp.success) router.back()
+    } catch (error) {
+      handleError({ error, shouldAlert: true })
+    }
+  }
 
   return (
     <Dialog modal>
@@ -56,10 +66,7 @@ export const DeletePointModal = ({
                 size="$5"
                 theme="red"
                 variant="outlined"
-                onPress={async () => {
-                  const resp = await deletePoint(point.id)
-                  if (resp.success) router.back()
-                }}
+                onPress={handleDelete}
               >
                 Yes
               </Button>

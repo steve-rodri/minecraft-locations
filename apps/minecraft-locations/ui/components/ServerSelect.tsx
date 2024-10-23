@@ -9,7 +9,7 @@ import { useServerContext } from "../context/ServerContext"
 import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons"
 import { LinearGradient } from "tamagui/linear-gradient"
 import { useEffect, useMemo } from "react"
-import { useGetServers } from '../../api/servers';
+import { useGetServers } from "../../api/servers"
 
 export const ServerSelect = (props: SelectProps) => {
   const { selected, setSelected } = useServerContext()
@@ -58,9 +58,13 @@ export const ServerSelect = (props: SelectProps) => {
             {/* for longer lists memoizing these is useful */}
             {useMemo(
               () =>
-                servers?.map((item, i) => {
+                servers?.map((item) => {
                   return (
-                    <Select.Item index={i} key={item.name} value={item.name}>
+                    <Select.Item
+                      index={item.id}
+                      key={item.name}
+                      value={item.name}
+                    >
                       <Select.ItemText>{item.name}</Select.ItemText>
                       <Select.ItemIndicator marginLeft="auto">
                         <Check size={16} />

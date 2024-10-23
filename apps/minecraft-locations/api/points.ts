@@ -25,16 +25,9 @@ export const useGetPoint = (id: number, server: Server | null) => {
         "points",
         server?.id,
       ])
-      return (
-        pointsResponse?.docs.find((p) => p.id === id) ?? {
-          id: 0,
-          x: 0,
-          y: 0,
-          z: 0,
-          label: "",
-          server,
-        }
-      )
+      const point = pointsResponse?.docs.find((p) => p.id === id)
+      if (!point) return null
+      return point
     },
   })
 }

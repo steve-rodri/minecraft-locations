@@ -7,8 +7,8 @@ export type Server = {
   createdAt: string
 }
 
-export type ServerResponse = PayloadDocResponse<Server>
+export type ServersResponse = PayloadDocResponse<Server>
 
 export interface IServerRepository {
-  getServers(): Promise<ServerResponse | null>
+  getServers(): Promise<ServersResponse | null>
 }
