@@ -1,9 +1,15 @@
 {
   "name": "@org/source",
+  "private": true,
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "dev": "npx nx run-many -t dev --parallel"
   },
-  "private": true
+  "workspaces": [
+    "apps/*"
+  ],
+  "trustedDependencies": [
+    "@swc/core"
+  ]
 }
