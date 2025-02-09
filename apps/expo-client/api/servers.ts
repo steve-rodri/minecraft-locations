@@ -1,9 +1,5 @@
-import { useQuery } from "@tanstack/react-query"
-import { serverRepo } from "../repositories"
+import { trpc } from "./trpc"
 
 export const useGetServers = () => {
-  return useQuery({
-    queryKey: ["servers"],
-    queryFn: async () => serverRepo.getServers(),
-  })
+  return trpc.servers.getServers.useQuery()
 }

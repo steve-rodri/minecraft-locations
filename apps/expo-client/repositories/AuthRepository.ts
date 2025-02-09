@@ -17,15 +17,13 @@ export class AuthRepository implements IAuthRepository {
   }
 
   async currentUser(): Promise<CurrentUserResponse | null> {
-    const response = await this.axios.get<CurrentUserResponse | null>(
-      "/users/me",
-    )
+    const response = await this.axios.get<CurrentUserResponse | null>("/me")
     return response.data
   }
 
   async signUp(credentials: Credentials): Promise<SignUpResponse | null> {
     const response = await this.axios.post<SignUpResponse | null>(
-      "/users",
+      "/signup",
       credentials,
     )
     return response.data
@@ -33,19 +31,19 @@ export class AuthRepository implements IAuthRepository {
 
   async logIn(credentials: Credentials): Promise<LoginResponse | null> {
     const response = await this.axios.post<LoginResponse | null>(
-      "/users/login",
+      "/signin",
       credentials,
     )
     return response.data
   }
 
   async logOut(): Promise<void> {
-    await this.axios.post<{ message: string }>("/users/logout")
+    await this.axios.post<{ message: string }>("/signout")
   }
 
   async resetPassword(args: ResetPasswordArgs): Promise<{ success: boolean }> {
     const response = await this.axios.post<ResetPasswordResponse>(
-      "/users/reset-password",
+      "/reset-password",
       args,
     )
     if (response.data.token) return { success: true }
@@ -53,7 +51,7 @@ export class AuthRepository implements IAuthRepository {
   }
 
   async forgotPassword(email: string): Promise<{ success: boolean }> {
-    await this.axios.post<{ message: string }>("/users/forgot-password", {
+    await this.axios.post<{ message: string }>("/forgot-password", {
       email,
     })
     return { success: true }

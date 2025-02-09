@@ -1,10 +1,8 @@
 import { AuthRepository } from "./AuthRepository"
-import { PointRepository } from "./PointRepository"
-import { ServerRepository } from "./ServerRepository"
 import axios from "axios"
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:4100/api",
+  baseURL: "http://localhost:5500/auth",
   headers: {
     "Content-Type": "application/json",
   },
@@ -12,5 +10,3 @@ export const axiosInstance = axios.create({
 })
 
 export const authRepo = new AuthRepository(axiosInstance)
-export const pointRepo = new PointRepository(axiosInstance)
-export const serverRepo = new ServerRepository(axiosInstance)
