@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~api-server/*": [
+        "./apps/api-server/src/*"
+      ],
+      "~expo-client/*": [
+        "./apps/mobile-client/*"
+      ]
+    },
+    "rootDirs": [
+      "apps/api-server",
+      "apps/expo-client"
+    ]
+  }
+}
