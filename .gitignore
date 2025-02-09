@@ -64,3 +64,5 @@ node_modules/
 !.vscode/settings.json
 !.vscode/tasks.json
 .tamagui/
+
+.nx/cache
