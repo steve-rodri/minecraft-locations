@@ -1,9 +1,9 @@
 {
-  "name": "minecraft-locations",
+  "name": "expo-client",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/minecraft-locations/src",
+  "sourceRoot": "apps/expo-client/src",
   "projectType": "application",
   "tags": [],
-  "// targets": "to see all targets run: nx show project minecraft-locations --web",
+  "// targets": "to see all targets run: nx show project expo-client --web",
   "targets": {}
 }
