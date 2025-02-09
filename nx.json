@@ -1,0 +1,45 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "defaultBase": "main",
+  "cli": {
+    "packageManager": "bun"
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/expo/plugin",
+      "options": {
+        "startTargetName": "expo:start",
+        "buildTargetName": "build",
+        "prebuildTargetName": "prebuild",
+        "serveTargetName": "serve",
+        "installTargetName": "install",
+        "exportTargetName": "export",
+        "submitTargetName": "submit",
+        "runIosTargetName": "run-ios",
+        "runAndroidTargetName": "run-android",
+        "buildDepsTargetName": "build-deps",
+        "watchDepsTargetName": "watch-deps"
+      }
+    },
+    {
+      "plugin": "@nx/react-native/plugin",
+      "options": {
+        "startTargetName": "start",
+        "upgradeTargetName": "update",
+        "bundleTargetName": "bundle",
+        "podInstallTargetName": "pod-install",
+        "runIosTargetName": "run-ios",
+        "runAndroidTargetName": "run-android",
+        "buildIosTargetName": "build-ios",
+        "buildAndroidTargetName": "build-android",
+        "syncDepsTargetName": "sync-deps"
+      }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
+  ]
+}

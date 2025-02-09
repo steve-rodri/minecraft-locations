@@ -11,5 +11,19 @@
   ],
   "trustedDependencies": [
     "@swc/core"
-  ]
+  ],
+  "devDependencies": {
+    "@expo/cli": "~0.21.8",
+    "@nx/eslint": "20.4.2",
+    "@nx/expo": "20.4.2",
+    "@nx/react-native": "20.4.2",
+    "eslint": "~8.57.0",
+    "nx": "20.4.2"
+  },
+  "dependencies": {
+    "expo": "~52.0.11",
+    "react": "~18.3.1",
+    "react-dom": "~18.3.1",
+    "react-native": "0.76.3"
+  }
 }
