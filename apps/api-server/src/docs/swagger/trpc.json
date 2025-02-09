@@ -1,0 +1,62 @@
+{
+  "/trpc": {
+    "post": {
+      "tags": ["tRPC"],
+      "summary": "tRPC API",
+      "description": "Handles all tRPC API calls via a single entry point.",
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "example": "GET"
+                },
+                "path": {
+                  "type": "string",
+                  "example": "servers.getServer"
+                },
+                "input": {
+                  "type": "object",
+                  "example": {
+                    "id": "1"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Successful tRPC response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "object",
+                    "example": {
+                      "id": "1",
+                      "name": "Test Server"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request (invalid tRPC method or input)"
+        },
+        "401": {
+          "description": "Unauthorized (missing or invalid session)"
+        }
+      }
+    }
+  }
+}

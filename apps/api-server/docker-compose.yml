@@ -1,0 +1,50 @@
+name: "minecraft-locations"
+
+services:
+  postgres:
+    image: postgres:17
+    ports:
+      - "5421:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: minecraft-locations
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - "./docker-pg-init.sql:/docker-entrypoint-initdb.d/docker-pg-init.sql"
+    logging:
+      driver: none
+    networks:
+      - app_network
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'postgres', '-d', 'minecraft-locations']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  supertokens:
+    image: registry.supertokens.io/supertokens/supertokens-postgresql
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - 3567:3567
+    environment:
+      POSTGRESQL_CONNECTION_URI: "postgresql://postgres:password@postgres:5432/supertokens"
+    networks:
+      - app_network
+    restart: unless-stopped
+    healthcheck:
+      test: >
+        bash -c 'exec 3<>/dev/tcp/127.0.0.1/3567 && echo -e "GET /hello HTTP/1.1\r\nhost: 127.0.0.1:3567\r\nConnection: close\r\n\r\n" >&3 && cat <&3 | grep "Hello"'
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
