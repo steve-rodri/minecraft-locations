@@ -22,7 +22,7 @@
     "typescript-eslint": "^8.23.0"
   },
   "dependencies": {
-    "@trpc/server": "^10.45.2",
+    "@trpc/server": "^11.0.0-rc.748",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.2",

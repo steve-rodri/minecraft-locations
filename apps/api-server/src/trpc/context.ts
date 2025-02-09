@@ -1,4 +1,3 @@
-import { inferAsyncReturnType } from "@trpc/server"
 import { CreateExpressContextOptions } from "@trpc/server/adapters/express"
 import { SessionRequest } from "supertokens-node/framework/express"
 
@@ -15,9 +14,9 @@ export const createContext = async ({ req }: ContextOpts) => {
   const serverRepo = new ServerRepository()
   if (req.session) {
     const id = req.session.getUserId()
-    return { user: { id } }
+    return { user: { id }, pointRepo, serverRepo }
   }
   return { pointRepo, serverRepo }
 }
 
-export type Context = inferAsyncReturnType<typeof createContext>
+export type Context = Awaited<ReturnType<typeof createContext>>
