@@ -19,6 +19,7 @@ import { CurrentToast } from "../components/CurrentToast"
 import SuperTokens from "supertokens-web-js"
 import Session from "supertokens-web-js/recipe/session"
 import EmailPassword from "supertokens-web-js/recipe/emailpassword"
+// import SuperTokens from "supertokens-react-native"
 import { httpBatchLink } from "@trpc/client"
 import { trpc } from "../../api/trpc"
 import { API_URL } from "../../env"
@@ -41,6 +42,11 @@ SuperTokens.init({
   recipeList: [Session.init(), EmailPassword.init()],
 })
 
+// SuperTokens.init({
+//   apiDomain: API_URL,
+//   apiBasePath: "/auth",
+// })
+
 export default function RootLayout() {
   const [queryClient] = useState(() => new QueryClient())
   const [trpcClient] = useState(() =>
@@ -49,7 +55,7 @@ export default function RootLayout() {
         httpBatchLink({
           url: "http://localhost:5500/trpc",
           async headers() {
-            const token = await Session.getAccessToken()
+            const token = await SuperTokens.getAccessToken()
             console.log({ token })
             return {
               Authorization: `Bearer ${token}`,
