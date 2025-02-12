@@ -20,17 +20,7 @@ export const setStorageItemAsync = async (
   key: string,
   value: string | null,
 ) => {
-  if (Platform.OS === "web") {
-    try {
-      if (value === null) {
-        localStorage.removeItem(key)
-      } else {
-        localStorage.setItem(key, value)
-      }
-    } catch (e) {
-      console.error("Local storage is unavailable:", e)
-    }
-  } else {
+  if (Platform.OS !== "web") {
     if (value == null) {
       await SecureStore.deleteItemAsync(key)
     } else {
@@ -40,32 +30,25 @@ export const setStorageItemAsync = async (
 }
 
 export const useStorageState = (key: string): UseStateHook<string> => {
-  // Public
   const [state, setState] = useAsyncState<string>()
 
-  // Get
+  // Get stored value (only on mobile)
   useEffect(() => {
-    if (Platform.OS === "web") {
-      try {
-        if (typeof localStorage !== "undefined") {
-          setState(localStorage.getItem(key))
-        }
-      } catch (e) {
-        console.error("Local storage is unavailable:", e)
-      }
-    } else {
+    if (Platform.OS !== "web") {
       SecureStore.getItemAsync(key).then((value) => {
         setState(value)
       })
     }
   }, [key, setState])
 
-  // Set
+  // Set new value (only on mobile)
   const setValue = useCallback(
     (value: string | null) => {
-      setStorageItemAsync(key, value).then(() => {
-        setState(value)
-      })
+      if (Platform.OS !== "web") {
+        setStorageItemAsync(key, value).then(() => {
+          setState(value)
+        })
+      }
     },
     [key, setState],
   )

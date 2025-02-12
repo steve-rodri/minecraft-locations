@@ -13,7 +13,7 @@ const schema = z.object({
 })
 
 export default function SignInForm() {
-  const { logIn } = useAuthContext()
+  const { signIn } = useAuthContext()
   const {
     control,
     handleSubmit,
@@ -28,7 +28,7 @@ export default function SignInForm() {
 
   const onSubmit: SubmitHandler<z.infer<typeof schema>> = async (data) => {
     try {
-      const { success } = await logIn(data)
+      const { success } = await signIn(data)
       if (!success) {
         Alert.alert("Error", "Invalid email or password")
         return
