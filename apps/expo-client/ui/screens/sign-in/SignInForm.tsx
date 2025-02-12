@@ -13,7 +13,7 @@ const schema = z.object({
 })
 
 export default function SignInForm() {
-  const { logIn } = useAuthContext()
+  const { signIn: logIn } = useAuthContext()
   const {
     control,
     handleSubmit,

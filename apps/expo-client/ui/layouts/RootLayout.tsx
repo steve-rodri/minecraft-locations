@@ -9,17 +9,14 @@ import { ToastProvider } from "@tamagui/toast"
 import { useFonts } from "expo-font"
 import { SplashScreen, Stack } from "expo-router"
 import { useEffect, useState } from "react"
-import { useColorScheme } from "react-native"
+import { Platform, useColorScheme } from "react-native"
 import { TamaguiProvider, View } from "tamagui"
+import SecureStore from "expo-secure-store"
 
 import { config } from "../../tamagui.config"
 import "../../tamagui-web.css"
 import { AuthProvider } from "../context/AuthContext"
 import { CurrentToast } from "../components/CurrentToast"
-import SuperTokens from "supertokens-web-js"
-import Session from "supertokens-web-js/recipe/session"
-import EmailPassword from "supertokens-web-js/recipe/emailpassword"
-// import SuperTokens from "supertokens-react-native"
 import { httpBatchLink } from "@trpc/client"
 import { trpc } from "../../api/trpc"
 import { API_URL } from "../../env"
@@ -33,29 +30,16 @@ export const unstable_settings = {
 
 SplashScreen.preventAutoHideAsync()
 
-SuperTokens.init({
-  appInfo: {
-    apiDomain: API_URL,
-    apiBasePath: "/auth",
-    appName: "minecraft-locations",
-  },
-  recipeList: [Session.init(), EmailPassword.init()],
-})
-
-// SuperTokens.init({
-//   apiDomain: API_URL,
-//   apiBasePath: "/auth",
-// })
-
 export default function RootLayout() {
   const [queryClient] = useState(() => new QueryClient())
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: "http://localhost:5500/trpc",
+          url: `${API_URL}/trpc`,
           async headers() {
-            const token = await SuperTokens.getAccessToken()
+            if (Platform.OS === "web") return {}
+            const token = await SecureStore.getItemAsync("accessToken")
             console.log({ token })
             return {
               Authorization: `Bearer ${token}`,

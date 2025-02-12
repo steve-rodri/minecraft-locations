@@ -3,6 +3,7 @@ import {
   errorHandler,
   middleware as supertokensMiddleware,
 } from "supertokens-node/framework/express"
+import Session from "supertokens-node/recipe/session"
 import { verifySession } from "supertokens-node/recipe/session/framework/express"
 import { createExpressMiddleware } from "@trpc/server/adapters/express"
 import swaggerUi from "swagger-ui-express"
@@ -16,6 +17,7 @@ import { BASE_URL, CLIENT_URL } from "./env"
 import { renderTrpcPanel } from "trpc-panel"
 import { loggerMiddleware, errorLogger } from "./logger"
 import { initSuperTokens } from "./supertokens/init"
+import authRouter from "./routers/authRouter"
 
 const trpcExpressMiddleware = createExpressMiddleware({
   router: appRouter,
@@ -35,6 +37,7 @@ export const createServer = async () => {
     }),
   )
   app.use(supertokensMiddleware())
+  app.use(authRouter)
 
   app.use(loggerMiddleware)
   app.use("/trpc", verifySession(), trpcExpressMiddleware)
@@ -44,7 +47,7 @@ export const createServer = async () => {
     return res.send(renderTrpcPanel(appRouter, { url: `${BASE_URL}/trpc` }))
   })
 
-  app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerOptions))
+  app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerOptions))
 
   app.use(errorLogger)
   app.use(errorHandler())

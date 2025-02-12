@@ -1,58 +1,39 @@
-import { createContext, ReactNode, useContext, useEffect } from "react"
-import { useStorageState } from "../../hooks/useSessionState"
-import Session from "supertokens-web-js/recipe/session"
+import { createContext, ReactNode, useContext } from "react"
 
-import { authRepo } from "../../repositories/index"
 import { Credentials } from "../../interfaces/IAuthRepository"
 import { STUser } from "../../repositories/supertokens/schemas"
+import { useAuthState } from "../../hooks/useAuthState"
+import { AuthRepository } from "../../repositories/AuthRepository"
 
 const AuthContext = createContext<{
-  logIn: (values: Credentials) => Promise<{ success: boolean }>
-  logOut: () => void
-  session?: string | null
+  signIn: (values: Credentials) => Promise<{ success: boolean }>
+  signOut: () => void
+  isAuthenticated: boolean | null
   user?: STUser
   isLoading: boolean
 } | null>(null)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [[isLoading, session], setSession] = useStorageState("session")
+  const { isAuthenticated, isLoading } = useAuthState()
+  const authRepo = new AuthRepository()
 
-  const logIn = async (credentials: Credentials) => {
+  const signIn = async (credentials: Credentials) => {
     const user = await authRepo.signIn(credentials)
     if (!user) return { success: false }
-    // ✅ Ensure the session is refreshed before retrieving the token
-    await Session.attemptRefreshingSession()
-    const token = await Session.getAccessToken()
-    console.log({ token })
-    if (!token) return { success: false }
-    setSession(token)
     return { success: true }
   }
 
-  const logOut = () => {
-    setSession(null)
+  const signOut = () => {
     authRepo.signOut()
   }
-
-  useEffect(() => {
-    const mount = async () => {
-      const token = await Session.getAccessToken()
-      if (token) {
-        setSession(token)
-      } else {
-        setSession(null)
-      }
-    }
-    mount()
-  }, [setSession])
 
   return (
     <AuthContext.Provider
       value={{
-        logIn,
-        logOut,
-        session,
+        signIn,
+        signOut,
         isLoading,
+        isAuthenticated,
       }}
     >
       {children}

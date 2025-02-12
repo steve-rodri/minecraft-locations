@@ -1,42 +1,46 @@
 import { IAuthRepository, Credentials } from "../interfaces/IAuthRepository"
 import axios, { AxiosInstance } from "axios"
 import {
-  STUser,
+  sessionResponseSchema,
   stSignInResponseSchema,
   stSignUpResponseSchema,
 } from "./supertokens/schemas"
-import Supertokens from "supertokens-react-native"
+import SecureStore from "expo-secure-store"
+import { Platform } from "react-native"
+import { API_URL } from "../env"
 
 export class AuthRepository implements IAuthRepository {
-  private axios: AxiosInstance = axios.create()
+  private axios: AxiosInstance = axios.create({
+    baseURL: `${API_URL}/auth`,
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
+  })
 
-  constructor(axiosInstance: AxiosInstance) {
-    this.axios = axiosInstance
+  constructor() {
+    if (Platform.OS === "web") return
+    // 🔄 Attach JWT on mobile (interceptor)
+    this.axios.interceptors.request.use(async (config) => {
+      const token = await SecureStore.getItemAsync("accessToken")
+      if (token) config.headers.Authorization = `Bearer ${token}`
+      return config
+    })
   }
 
-  async currentUser(): Promise<STUser | undefined> {
-    return
+  async getSession() {
+    try {
+      return sessionResponseSchema.parse(await this.axios.get("/session"))
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   async signUp(credentials: Credentials) {
     try {
-      const resp = stSignUpResponseSchema.parse(
-        await this.axios.post("/signup", credentials),
-      )
-      if (resp.status !== "OK") throw resp
-      const sessionExists = await Supertokens.doesSessionExist()
-      if (!sessionExists) {
-        throw new Error("Session does not exist (thrown from signIn)")
-      }
-
-      const payload = await Supertokens.getAccessTokenPayloadSecurely()
-      console.log("Payload", payload)
-
-      const token = await Supertokens.getAccessToken()
-      if (!token) {
-        throw new Error("Unable to get Access Token (thrown from signIn)")
-      }
-      return { user: resp.user, token }
+      const response = await this.axios.post("/signup", credentials)
+      if (Platform.OS !== "web") await extractTokens(response.headers)
+      const stResp = stSignUpResponseSchema.parse(response.data)
+      if (stResp.status !== "OK") throw stResp
+      return stResp.user
     } catch (error) {
       console.error(error)
     }
@@ -44,26 +48,22 @@ export class AuthRepository implements IAuthRepository {
 
   async signIn(credentials: Credentials) {
     try {
-      const resp = stSignInResponseSchema.parse(
-        await this.axios.post("/signin", credentials),
-      )
-      if (resp.status !== "OK") throw resp
-      const sessionExists = await Supertokens.doesSessionExist()
-      if (!sessionExists) {
-        throw new Error("Session does not exist (thrown from signIn)")
-      }
-      const token = await Supertokens.getAccessToken()
-      if (!token) {
-        throw new Error("Unable to get Access Token (thrown from signIn)")
-      }
-      return { user: resp.user, token }
+      const response = await this.axios.post("/signin", credentials)
+      if (Platform.OS !== "web") await extractTokens(response.headers)
+      const stResp = stSignInResponseSchema.parse(response.data)
+      if (stResp.status !== "OK") throw stResp
+      return stResp.user
     } catch (error) {
       console.error(error)
     }
   }
 
   async signOut(): Promise<void> {
-    await Supertokens.signOut()
+    await this.axios.post("/signout")
+    if (Platform.OS !== "web") {
+      await SecureStore.deleteItemAsync("accessToken")
+      await SecureStore.deleteItemAsync("refreshToken")
+    }
   }
 
   async resetPassword(password: string): Promise<{ success: boolean }> {
@@ -75,5 +75,14 @@ export class AuthRepository implements IAuthRepository {
   async forgotPassword(email: string): Promise<{ success: boolean }> {
     await this.axios.post<{ message: string }>("/forgot-password", { email })
     return { success: true }
+  }
+}
+
+const extractTokens = async (headers: any) => {
+  const accessToken = headers["st-access-token"]
+  const refreshToken = headers["st-refresh-token"]
+  if (accessToken && refreshToken) {
+    await SecureStore.setItemAsync("accessToken", accessToken)
+    await SecureStore.setItemAsync("refreshToken", refreshToken)
   }
 }

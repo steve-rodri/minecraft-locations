@@ -85,6 +85,21 @@ export const stSignUpResponseSchema = z.union([
   signUpErrorsSchema,
 ])
 
+const sessionBaseResponseSchema = z.object({
+  isAuthenticated: z.literal(false),
+})
+
+const sessionSuccessResponseSchema = baseResponseSchema.extend({
+  isAuthenticated: z.literal(true),
+  userId: z.string(),
+})
+
+export const sessionResponseSchema = z.union([
+  sessionBaseResponseSchema,
+  sessionSuccessResponseSchema,
+])
+
 export type STUser = z.infer<typeof stUserSchema>
 export type STSignInResponse = z.infer<typeof stSignInResponseSchema>
 export type STSignUpResponse = z.infer<typeof stSignUpResponseSchema>
+export type SessionResponse = z.infer<typeof sessionResponseSchema>
