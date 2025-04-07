@@ -6,8 +6,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { router } from "expo-router"
 import { useState } from "react"
 import { useAuthContext } from "../../context/AuthContext"
-import { authRepo } from "../../../repositories/index"
+import { FirebaseAuthRepository } from "../../../repositories/FirebaseAuthRepository"
 import { handleError } from "../../../lib/handleErrors"
+
+const authRepo = new FirebaseAuthRepository()
 
 const schema = z
   .object({
@@ -40,16 +42,10 @@ export default function ChangePasswordForm() {
     },
   })
   const [success, setSuccess] = useState(false)
-  const authCtx = useAuthContext()
 
-  const onSubmit: SubmitHandler<z.infer<typeof schema>> = async ({
-    newPassword,
-  }) => {
+  const onSubmit: SubmitHandler<z.infer<typeof schema>> = async () => {
     try {
-      const { success } = await authRepo.resetPassword({
-        password: newPassword,
-        token: authCtx.session ?? "",
-      })
+      const { success } = await authRepo.resetPassword()
       if (!success) {
         Alert.alert(
           "Error",
@@ -125,6 +121,7 @@ export default function ChangePasswordForm() {
           theme={success ? "green" : "dark"}
           disabled={isLoading || isSubmitting}
           icon={isLoading || isSubmitting ? () => <Spinner /> : undefined}
+          // @ts-ignore
           mt="$5"
         >
           {success ? "Password Changed!" : "Change Password"}

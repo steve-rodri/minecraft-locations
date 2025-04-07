@@ -1,20 +1,15 @@
 import { CreateExpressContextOptions } from "@trpc/server/adapters/express"
-import { SessionRequest } from "supertokens-node/framework/express"
 
 import { PointRepository } from "../repositories/PointRepository"
 import { ServerRepository } from "../repositories/ServerRepository"
+import { decodeFirebaseIdToken } from "../firebase/decodeToken"
 
-type ContextOpts = {
-  req: CreateExpressContextOptions["req"] & SessionRequest
-  res: CreateExpressContextOptions["res"]
-}
-
-export const createContext = async ({ req }: ContextOpts) => {
+export const createContext = async ({ req }: CreateExpressContextOptions) => {
   const pointRepo = new PointRepository()
   const serverRepo = new ServerRepository()
-  if (req.session) {
-    const id = req.session.getUserId()
-    return { user: { id }, pointRepo, serverRepo }
+  const user = await decodeFirebaseIdToken(req.headers.authorization)
+  if (user) {
+    return { user: { id: user.uid }, pointRepo, serverRepo }
   }
   return { pointRepo, serverRepo }
 }

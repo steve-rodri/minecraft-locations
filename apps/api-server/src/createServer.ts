@@ -1,10 +1,3 @@
-import supertokens from "supertokens-node"
-import {
-  errorHandler,
-  middleware as supertokensMiddleware,
-} from "supertokens-node/framework/express"
-import Session from "supertokens-node/recipe/session"
-import { verifySession } from "supertokens-node/recipe/session/framework/express"
 import { createExpressMiddleware } from "@trpc/server/adapters/express"
 import swaggerUi from "swagger-ui-express"
 import swaggerOptions from "./swagger.options"
@@ -16,8 +9,6 @@ import { appRouter, createContext } from "./trpc"
 import { BASE_URL, CLIENT_URL } from "./env"
 import { renderTrpcPanel } from "trpc-panel"
 import { loggerMiddleware, errorLogger } from "./logger"
-import { initSuperTokens } from "./supertokens/init"
-import authRouter from "./routers/authRouter"
 
 const trpcExpressMiddleware = createExpressMiddleware({
   router: appRouter,
@@ -25,22 +16,19 @@ const trpcExpressMiddleware = createExpressMiddleware({
 })
 
 export const createServer = async () => {
-  initSuperTokens()
   const app = express()
   app.use(express.json())
   app.use(
     cors({
       // TODO: Add Origin for Mobile App
       origin: CLIENT_URL,
-      allowedHeaders: ["content-type", ...supertokens.getAllCORSHeaders()],
+      allowedHeaders: ["content-type"],
       credentials: true,
     }),
   )
-  app.use(supertokensMiddleware())
-  app.use(authRouter)
 
   app.use(loggerMiddleware)
-  app.use("/trpc", verifySession(), trpcExpressMiddleware)
+  app.use("/trpc", trpcExpressMiddleware)
 
   // @ts-expect-error overload
   app.use("/trpc-panel", (_, res) => {
@@ -50,7 +38,6 @@ export const createServer = async () => {
   app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerOptions))
 
   app.use(errorLogger)
-  app.use(errorHandler())
   return {
     app: http.createServer(app),
   }

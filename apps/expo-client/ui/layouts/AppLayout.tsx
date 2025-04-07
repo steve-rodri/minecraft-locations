@@ -3,12 +3,13 @@ import { YStack, Text } from "tamagui"
 import { useAuthContext } from "../context/AuthContext"
 
 export default function AppLayout() {
-  const { session, isLoading } = useAuthContext()
+  const { session, initializing } = useAuthContext()
 
-  if (isLoading) {
+  if (initializing) {
     return (
       <YStack
         flex={1}
+        // @ts-ignore
         bg="$background"
         justifyContent="center"
         alignItems="center"

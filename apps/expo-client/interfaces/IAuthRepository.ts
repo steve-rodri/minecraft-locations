@@ -1,4 +1,4 @@
-import { STUser, SessionResponse } from "../repositories/supertokens/schemas"
+import { User } from "firebase/auth"
 
 export type Credentials = {
   email: string
@@ -6,10 +6,9 @@ export type Credentials = {
 }
 
 export interface IAuthRepository {
-  getSession(): Promise<SessionResponse | undefined>
-  signUp(credentials: Credentials): Promise<STUser | undefined>
-  signIn(credentials: Credentials): Promise<STUser | undefined>
+  signUp(credentials: Credentials): Promise<User | undefined>
+  signIn(credentials: Credentials): Promise<User | undefined>
   signOut(): Promise<void>
-  resetPassword(password: string): Promise<{ success: boolean }>
+  // resetPassword(password: string): Promise<{ success: boolean }>
   forgotPassword(email: string): Promise<{ success: boolean }>
 }

@@ -1,39 +1,46 @@
-import { createContext, ReactNode, useContext } from "react"
+import { User } from "firebase/auth"
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useContext,
+  createContext,
+  ReactNode,
+} from "react"
 
-import { Credentials } from "../../interfaces/IAuthRepository"
-import { STUser } from "../../repositories/supertokens/schemas"
-import { useAuthState } from "../../hooks/useAuthState"
-import { AuthRepository } from "../../repositories/AuthRepository"
+import { onAuthStateChangeListener } from "../../lib/firebase"
+import { FirebaseAuthRepository } from "../../repositories/FirebaseAuthRepository"
 
-const AuthContext = createContext<{
-  signIn: (values: Credentials) => Promise<{ success: boolean }>
-  signOut: () => void
-  isAuthenticated: boolean | null
-  user?: STUser
-  isLoading: boolean
-} | null>(null)
+interface IAuthContext {
+  initializing: boolean
+  session: User | null
+  authRepo: FirebaseAuthRepository
+}
+
+const AuthContext = createContext<IAuthContext>({
+  initializing: true,
+  session: null,
+  authRepo: new FirebaseAuthRepository(),
+})
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { isAuthenticated, isLoading } = useAuthState()
-  const authRepo = new AuthRepository()
-
-  const signIn = async (credentials: Credentials) => {
-    const user = await authRepo.signIn(credentials)
-    if (!user) return { success: false }
-    return { success: true }
-  }
-
-  const signOut = () => {
-    authRepo.signOut()
-  }
+  const [session, setSession] = useState<User | null>(null)
+  const [initializing, setInitializing] = useState(true)
+  const onAuthStateChanged = useCallback(async (data: User | null) => {
+    setSession(data)
+    setInitializing(false)
+  }, [])
+  useEffect(() => {
+    const subscriber = onAuthStateChangeListener(onAuthStateChanged)
+    return subscriber
+  }, [onAuthStateChanged])
 
   return (
     <AuthContext.Provider
       value={{
-        signIn,
-        signOut,
-        isLoading,
-        isAuthenticated,
+        authRepo: new FirebaseAuthRepository(),
+        initializing,
+        session,
       }}
     >
       {children}
@@ -42,9 +49,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 }
 
 export const useAuthContext = () => {
-  const value = useContext(AuthContext)
-  if (!value) {
-    throw new Error("useSession must be wrapped in a <SessionProvider />")
+  const authCtx = useContext(AuthContext)
+  if (!authCtx) {
+    throw Error("useAuthContext must be used within an AuthProvider")
   }
-  return value
+
+  return authCtx
 }

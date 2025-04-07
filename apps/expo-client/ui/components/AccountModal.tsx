@@ -63,7 +63,7 @@ export const AccountModal = () => {
               pressTheme
               radiused
               onPress={() => {
-                authCtx.signOut()
+                authCtx.authRepo.signOut()
                 router.push("/")
               }}
             />

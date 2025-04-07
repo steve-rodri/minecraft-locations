@@ -1,4 +1,3 @@
-import { Alert } from "react-native"
 import { Button, Input, Form, Label, Spinner } from "tamagui"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { router } from "expo-router"
@@ -13,7 +12,7 @@ const schema = z.object({
 })
 
 export default function SignInForm() {
-  const { signIn } = useAuthContext()
+  const { authRepo } = useAuthContext()
   const {
     control,
     handleSubmit,
@@ -28,11 +27,7 @@ export default function SignInForm() {
 
   const onSubmit: SubmitHandler<z.infer<typeof schema>> = async (data) => {
     try {
-      const { success } = await signIn(data)
-      if (!success) {
-        Alert.alert("Error", "Invalid email or password")
-        return
-      }
+      await authRepo.signIn(data)
       router.replace("/")
     } catch (error) {
       handleError({ error, shouldAlert: true })
