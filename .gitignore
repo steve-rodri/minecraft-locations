@@ -41,6 +41,7 @@ libpeerconnection.log
 *.mobileprovision
 *.p12
 *.p8
+minecraft-locations-*.json
 
 # Tests and type definition artifacts
 **/tests/spec/out/
